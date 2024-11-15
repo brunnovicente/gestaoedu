@@ -33,7 +33,6 @@ const Permuta = banco.sequelize.define('permutas', {
     }
 })
 
-//Professor.sync()
 
 Permuta.belongsTo(Diario, {
     foreignKey: 'diario_id',

@@ -25,8 +25,6 @@ const Turma = banco.sequelize.define('turmas', {
     }
 })
 
-//Professor.sync()
-
 Turma.belongsTo(Curso, {
     foreignKey: 'curso_id',
     constraint: true,

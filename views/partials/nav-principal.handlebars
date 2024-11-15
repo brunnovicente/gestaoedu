@@ -5,7 +5,7 @@
         </span>
         <div class="dropdown">
             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user"></i> Fulano
+                <i class="fa-solid fa-user"></i> <span id="nome"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="/usuario/alterarsenha"><i class="fa-solid fa-key"></i> Alterar Senha</a></li>
@@ -20,6 +20,9 @@
 </nav>
 
 <script>
+    var nomecompleto = "{{usuario.professor.nome}}"
+    document.getElementById('nome').innerText = nomecompleto.split(' ')[0]
+
     function sair(){
         if(confirm('Tem certeza que deseja sair?')){
             window.location.href = '/usuario/logout'

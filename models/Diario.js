@@ -18,8 +18,6 @@ const Diario = banco.sequelize.define('diarios', {
     }
 })
 
-//Professor.sync()
-
 Diario.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,

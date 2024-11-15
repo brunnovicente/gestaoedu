@@ -17,8 +17,6 @@ const Curso = banco.sequelize.define('cursos', {
     }
 })
 
-//Professor.sync()
-
 Curso.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,

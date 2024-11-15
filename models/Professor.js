@@ -20,6 +20,4 @@ const Professor = banco.sequelize.define('professores', {
     }
 })
 
-//Professor.sync()
-
 export default Professor

@@ -5,9 +5,9 @@ import Turma from "./Turma.js";
 import Diario from "./Diario.js";
 import Permuta from "./Permuta.js";
 
-Professor.sync()
-Usuario.sync()
-Curso.sync()
-Turma.sync()
-Diario.sync()
-Permuta.sync()
+await Professor.sync()
+await Usuario.sync()
+await Curso.sync()
+await Turma.sync()
+await Diario.sync()
+await Permuta.sync()

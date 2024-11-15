@@ -10,6 +10,8 @@ import { allowInsecurePrototypeAccess} from "@handlebars/allow-prototype-access"
 import session from "express-session";
 import flash from "connect-flash"
 import passport from "passport"
+import auth from "./config/auth.js";
+auth(passport)
 
 
 ///////////////////////////////
@@ -55,8 +57,9 @@ servidor.engine('handlebars', handlebars.engine({
         },
         categoriaUsuario: function (categoria){
             switch (categoria) {
-                case 0: return "Padrão";
-                case 1: return "Administrador";
+                case 0: return "Docente";
+                case 1: return "Coordenador";
+                case 2: return "Supremo";
             }
         },
         igual:function (a,b){
@@ -82,12 +85,14 @@ servidor.get("/", (req, res) => {
     res.redirect('/principal')
 })
 
-
 //Grupos de Rotas
 import principal from './routes/principal.js'
 servidor.use('/principal', principal);
 
 import permuta from './routes/permuta.js'
 servidor.use('/permuta', permuta);
+
+import usuario from './routes/usuario.js'
+servidor.use('/usuario', usuario);
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))

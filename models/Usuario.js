@@ -31,6 +31,4 @@ Usuario.belongsTo(Professor, {
     onDelete: 'CASCADE'
 })
 
-//Usuario.sync()
-
 export default Usuario
