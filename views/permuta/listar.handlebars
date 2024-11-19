@@ -47,23 +47,3 @@
 
     {{/if}}
 </div>
-
-<script>
-    if ("geolocation" in navigator) {
-        // Se o suporte estiver disponível, solicita a localização do usuário
-        navigator.geolocation.getCurrentPosition(function(position) {
-            // Obtém a latitude e a longitude do usuário
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-
-            // Faz algo com a localização, como exibir no console
-            console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-        }, function(error) {
-            // Caso ocorra um erro ao obter a localização do usuário
-            console.error("Erro ao obter localização: " + error.message);
-        });
-    } else {
-        // Se o navegador não suportar a API de Geolocalização
-        console.error("Geolocalização não suportada pelo navegador.");
-    }
-</script>

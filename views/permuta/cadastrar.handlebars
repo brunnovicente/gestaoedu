@@ -4,7 +4,7 @@
             Nova Permuta de Aula
         </h3>
         <div class="col-2 d-flex justify-content-end">
-            <a class="btn btn-outline-dark">Voltar</a>
+            <a href="/permuta/listar" class="btn btn-outline-dark">Voltar</a>
         </div>
     </div>
     <div class="container">
@@ -13,11 +13,37 @@
             <input type="text" name="professor" class="form-control mb-2" disabled>
             <label>CURSO</label>
             <input type="text" name="curso" class="form-control mb-2" disabled>
-            <label>TURMA</label>
-            <input type="text" name="turma" class="form-control mb-2" disabled>
-            <label>DIÁRIO</label>
-            <input type="text" name="diario" class="form-control mb-2" disabled>
-
+            <div class="row">
+                <div class="col">
+                    <label>TURMA</label>
+                    <input type="text" name="turma" class="form-control mb-2" disabled>
+                </div>
+                <div class="col">
+                    <label>DIÁRIO</label>
+                    <input type="text" name="diario" class="form-control mb-2" disabled>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-2">
+                <div class="col-3">
+                    <label>DATA</label>
+                    <input type="date" name="data" class="form-control">
+                </div>
+                <div class="col-8 ms-5">
+                    <label class="d-block">HORARIOS</label>
+                    <input type="checkbox" class="form-check-input" name="1horario" value="1"> 1º
+                    <input type="checkbox" class="form-check-input" name="2horario" value="2"> 2º
+                    <input type="checkbox" class="form-check-input" name="3horario" value="3"> 3º
+                    <input type="checkbox" class="form-check-input" name="4horario" value="4"> 4º
+                    <input type="checkbox" class="form-check-input" name="5horario" value="5"> 5º
+                    <input type="checkbox" class="form-check-input" name="6horario" value="6"> 6º
+                </div>
+                <label for="exampleTextarea" class="form-label">JUSTIFICATIVA</label>
+                <textarea class="form-control mx-2" style="width: 98%" rows="5" placeholder="Escreva algo..."></textarea>
+            </div>
+            <hr>
+            <H5>Devolução</H5>
+            <input type="radio"> Estou cobrindo um horário vago
 
         </form>
     </div>
