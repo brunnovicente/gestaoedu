@@ -16,12 +16,10 @@
         </div>
     </div>
 
-
-    {{#if permutas}}
+    {{#if diarios}}
 
     <div class="bg-light my-3 py-2 px-1 d-flex justify-content-between">
-        <h5>Prof. <?php echo $docente->nome;?></h5>
-        <?= $this->Html->link('<i class="fas fa-folder"></i> Minhas Solicitações', ['controller'=>'solicitacoes','action'=>'listar', $docente->id],['class'=>'btn btn-sm btn-outline-dark', 'escape'=>false]) ?>
+        <h5>Prof. {{professor.nome}}</h5>
     </div>
     <table class="table table-striped">
         <tr>
@@ -31,18 +29,17 @@
             <th>ANO</th>
             <th></th>
         </tr>
-        <?php foreach($diarios as $diario):?>
+        {{#each diarios}}
         <tr>
-            <td><?= $diario->turma->curso->descricao ?></td>
-            <td><?= $diario->turma->descricao ?></td>
-            <td><?= $diario->descricao ?></td>
-            <td><?= $diario->turma->ano ?></td>
+            <td>{{turma.curso.descricao}}</td>
+            <td>{{turma.descricao}}</td>
+            <td>{{descricao}}</td>
+            <td>{{turma.ano}}</td>
             <td>
-                <?= $this->Html->link(__('<i class="fas fa-unlock"></i> Solicitar'), ['controller'=>'solicitacoes','action' => 'add', $diario->id],['class'=>'btn btn-outline-dark btn-sm m-1', 'escape'=>false]) ?>
-                <?= $this->Html->link(__('<i class="fa-solid fa-right-left"></i> Transferir'), ['controller'=>'solicitacoes','action' => 'transferir', $diario->turma->id, $diario->professore->id],['class'=>'btn btn-outline-dark btn-sm m-1', 'escape'=>false]) ?>
+                <a href="/permuta/cadastrar/{{id}}" class="btn btn-outline-dark btn-sm m-1"><i class="fas fa-unlock"></i> Solicitar</a>
             </td>
         </tr>
-        <?php endforeach;?>
+        {{/each}}
     </table>
 
     {{/if}}

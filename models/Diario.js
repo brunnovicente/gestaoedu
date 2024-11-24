@@ -8,9 +8,16 @@ const Diario = banco.sequelize.define('diarios', {
         primaryKey: true,
         autoIncrement: true
     },
+    codigo:{
+        type: banco.Sequelize.INTEGER,
+        allowNull: false
+    },
     descricao: {
         type: banco.Sequelize.STRING(100),
         allowNull: false
+    },
+    horario:{
+       type: banco.Sequelize.STRING(20),
     },
     status:{
         type: banco.Sequelize.INTEGER,

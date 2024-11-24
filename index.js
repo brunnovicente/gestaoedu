@@ -62,6 +62,18 @@ servidor.engine('handlebars', handlebars.engine({
                 case 2: return "Supremo";
             }
         },
+        defineHorario: function (horario){
+            var horarios = horario.split(' / ')
+            return horarios
+        },
+        diaSemana: function(dateString) {
+            const days = [
+                'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+            ];
+            const date = new Date(dateString);
+            if (isNaN(date)) return 'Invalid date'; // Validação básica
+            return days[date.getDay()];
+        },
         igual:function (a,b){
             return a === b
         }
@@ -82,7 +94,7 @@ servidor.use(express.static(path.join(__dirname, 'public')));
 ///////////////////
 
 servidor.get("/", (req, res) => {
-    res.redirect('/principal')
+    res.redirect('/permuta/listar')
 })
 
 //Grupos de Rotas

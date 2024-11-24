@@ -10,17 +10,17 @@
     <div class="container">
         <form>
             <label>PROFESSOR</label>
-            <input type="text" name="professor" class="form-control mb-2" disabled>
+            <input type="text" name="professor" value="{{diario.professore.nome}}" class="form-control mb-2" disabled>
             <label>CURSO</label>
-            <input type="text" name="curso" class="form-control mb-2" disabled>
+            <input type="text" name="curso" value="{{diario.turma.curso.descricao}}" class="form-control mb-2" disabled>
             <div class="row">
                 <div class="col">
                     <label>TURMA</label>
-                    <input type="text" name="turma" class="form-control mb-2" disabled>
+                    <input type="text" name="turma" value="{{diario.turma.descricao}}" class="form-control mb-2" disabled>
                 </div>
                 <div class="col">
                     <label>DIÁRIO</label>
-                    <input type="text" name="diario" class="form-control mb-2" disabled>
+                    <input type="text" value="{{diario.descricao}}" name="diario" class="form-control mb-2" disabled>
                 </div>
             </div>
             <hr>
@@ -31,14 +31,11 @@
                 </div>
                 <div class="col-8 ms-5">
                     <label class="d-block">HORARIOS</label>
-                    <input type="checkbox" class="form-check-input" name="1horario" value="1"> 1º
-                    <input type="checkbox" class="form-check-input" name="2horario" value="2"> 2º
-                    <input type="checkbox" class="form-check-input" name="3horario" value="3"> 3º
-                    <input type="checkbox" class="form-check-input" name="4horario" value="4"> 4º
-                    <input type="checkbox" class="form-check-input" name="5horario" value="5"> 5º
-                    <input type="checkbox" class="form-check-input" name="6horario" value="6"> 6º
+                    {{#each (defineHorario diario.horario)}}
+                        <input type="checkbox" class="form-check-input" name="horario" value="1"> {{this}}
+                    {{/each}}
                 </div>
-                <label for="exampleTextarea" class="form-label">JUSTIFICATIVA</label>
+                <label for="exampleTextarea" class="form-label mt-3">JUSTIFICATIVA</label>
                 <textarea class="form-control mx-2" style="width: 98%" rows="5" placeholder="Escreva algo..."></textarea>
             </div>
             <hr>

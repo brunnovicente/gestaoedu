@@ -11,15 +11,11 @@ const Permuta = banco.sequelize.define('permutas', {
         type: banco.Sequelize.DATE,
         allowNull: false
     },
-    retorno: {
-        type: banco.Sequelize.DATE,
-        allowNull: false
-    },
-    horarios:{
+    dia:{
         type: banco.Sequelize.STRING(20),
         allowNull: false
     },
-    horarios2:{
+    horarios:{
         type: banco.Sequelize.STRING(20),
         allowNull: false
     },
@@ -33,15 +29,8 @@ const Permuta = banco.sequelize.define('permutas', {
     }
 })
 
-
 Permuta.belongsTo(Diario, {
     foreignKey: 'diario_id',
-    constraint: true,
-    onDelete: 'CASCADE'
-})
-
-Permuta.belongsTo(Diario, {
-    foreignKey: 'substituto_id',
     constraint: true,
     onDelete: 'CASCADE'
 })
