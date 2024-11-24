@@ -1,14 +1,18 @@
 <div class="col-md-5 mx-auto mb-2 shadow pb-2 mt-1" id="formulario">
     <div class="row p-3">
         <h3 class="col-10">
-            Nova Permuta de Aula
+            Registrar Ausencia
         </h3>
         <div class="col-2 d-flex justify-content-end">
-            <a href="/permuta/listar" class="btn btn-outline-dark">Voltar</a>
+            <form method="post" action="/permuta/listar">
+                <input hidden="hidden" type="text" value="{{diario.professore.siape}}" name="busca">
+                <button type="submit" href="/permuta/listar" class="btn btn-outline-dark">Voltar</button>
+            </form>
+
         </div>
     </div>
     <div class="container">
-        <form>
+        <form method="post" action="/permuta/cadastrar">
             <label>PROFESSOR</label>
             <input type="text" name="professor" value="{{diario.professore.nome}}" class="form-control mb-2" disabled>
             <label>CURSO</label>
@@ -20,6 +24,7 @@
                 </div>
                 <div class="col">
                     <label>DIÁRIO</label>
+                    <input hidden="hidden" type="text" value="{{diario.id}}" name="id_diario">
                     <input type="text" value="{{diario.descricao}}" name="diario" class="form-control mb-2" disabled>
                 </div>
             </div>
@@ -29,18 +34,29 @@
                     <label>DATA</label>
                     <input type="date" name="data" class="form-control">
                 </div>
-                <div class="col-8 ms-5">
+                <div class="col-3 ms-5">
                     <label class="d-block">HORARIOS</label>
+                    <select id="horarios" name="horarios" class="form-select">
                     {{#each (defineHorario diario.horario)}}
-                        <input type="checkbox" class="form-check-input" name="horario" value="1"> {{this}}
+                        <option value="{{this}}">{{this}}</option>
                     {{/each}}
+                    </select>
                 </div>
                 <label for="exampleTextarea" class="form-label mt-3">JUSTIFICATIVA</label>
-                <textarea class="form-control mx-2" style="width: 98%" rows="5" placeholder="Escreva algo..."></textarea>
+                <textarea class="form-control mx-2" name="justificativa" style="width: 98%" rows="5" placeholder="Escreva algo..."></textarea>
             </div>
             <hr>
-            <H5>Devolução</H5>
-            <input type="radio"> Estou cobrindo um horário vago
+            <label>SUBSTITUTO</label>
+            <select id="substituto" name="substituto" class="form-select">
+                <option value="">Sem substituto</option> <!-- Opção em branco -->
+                {{#each substitutos}}
+                    <option value="{{id}}"><strong>{{descricao}}</strong> - {{professore.nome}}</option>
+                {{/each}}
+            </select>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
 
         </form>
     </div>

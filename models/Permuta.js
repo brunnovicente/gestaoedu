@@ -35,4 +35,10 @@ Permuta.belongsTo(Diario, {
     onDelete: 'CASCADE'
 })
 
+Permuta.belongsTo(Diario, {
+    foreignKey: 'substituto_id',
+    constraint: true,
+    onDelete: 'CASCADE'
+})
+
 export default Permuta
