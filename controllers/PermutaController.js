@@ -5,21 +5,17 @@ import Curso from "../models/Curso.js";
 import Permuta from "../models/Permuta.js";
 import tranporter from "../config/email.js"
 
-function enviarEmailProfessor(permuta){
+
+async function enviarEmailTeste(){
     const config = {
-        from: 'coordenacao@gestaoedu.com',
-        to: permuta.substituto.email,
-        subject: 'Nova Aula Registrada',
-        html:
-            // '<strong>CURSO</strong>'+permuta.diario.turma.curso.descricao+
-            '<strong>TURMA</strong>'+permuta.diario.turma.descricao+
-            '<strong>SEMESTRE</strong>'+permuta.diario.turma.ano+'.'+diario.turma.semestre+
-            '<strong>DIARIO: </strong>'+permuta.diario.descricao+
-            '<strong>DATA: </strong> '+permuta.data+
-            '<strong>DIA: </strong>'+permuta.dia+
-            '<strong>HORÁRIOS: </strong>'+permuta.horarios
+        from: 'coordenacao@batcaverna.online',
+        to: 'brunovicente.lima@ifma.edu.br',
+        subject: 'Teste de Registro',
+        html: '<h3>Deu Certo</h3>'
     }
-    const Mail = tranporter.sendMail(config)
+    tranporter.sendMail(config).then(function(){
+        console.log('Email enviado com sucesso!')
+    })
 }
 
 function definirDia(data){
@@ -40,7 +36,58 @@ function definirDia(data){
     return daysOfWeek[date.getDay()+1];
 }
 
+function enviarEmailProfessor(permuta){
+    const config = {
+        from: 'coordenacao@batcaverna.online',
+        to: permuta.substituto.professore.email,
+        subject: 'Nova Aula Registrada',
+        html:
+         '<strong>CURSO</strong>'+permuta.diario.turma.curso.descricao+'<br>'+
+            '<strong>TURMA</strong>'+permuta.diario.turma.descricao+'<br>'+
+            '<strong>SEMESTRE</strong>'+permuta.diario.turma.ano+'.'+permuta.diario.turma.semestre+'<br>'+
+            '<strong>DIARIO: </strong>'+permuta.diario.descricao+'<br>'+
+            '<strong>DATA: </strong> '+permuta.data+'<br>'+
+            '<strong>DIA: </strong>'+permuta.dia+'<br>'+
+            '<strong>HORÁRIOS: </strong>'+permuta.horarios
+    }
+    const Mail = tranporter.sendMail(config)
+}
+
 export default {
+    salvar: function (req, res){
+        const permuta = {
+            data: req.body.data,
+            horarios: req.body.horarios,
+            justificativa: req.body.justificativa,
+            status: 0,
+            diario_id: req.body.id_diario,
+            dia: definirDia(req.body.data),
+            substituto_id: req.body.substituto,
+        }
+        Permuta.create(permuta).then(async function (permuta) {
+            var substituto = await Diario.findByPk(permuta.substituto_id, {
+                include:{
+                    model: Professor
+                }
+            })
+            var diario = await Diario.findByPk(permuta.diario_id, {
+                include:{
+                    model: Turma,
+                    include:{
+                        model: Curso
+                    }
+                }
+            })
+            permuta.substituto = substituto
+            permuta.diario = diario
+            enviarEmailProfessor(permuta)
+            req.flash('success_msg', 'Permuta registrada com sucesso')
+            res.redirect('/permuta/listar');
+        })
+
+        //Falta criar a construção da solicitação
+
+    },
     index: function(req, res){
         Permuta.findAll({
             include:{
@@ -83,44 +130,7 @@ export default {
         })
 
     },
-    salvar: function (req, res){
-        const permuta = {
-            data: req.body.data,
-            horarios: req.body.horarios,
-            justificativa: req.body.justificativa,
-            status: 0,
-            diario_id: req.body.id_diario,
-            dia: definirDia(req.body.data),
-            substituto_id: req.body.substituto,
-        }
 
-        Permuta.create(permuta).then(function (){
-            Professor.findByPk(permuta.substituto_id).then(function (professor){
-
-                Diario.findByPk(permuta.diario_id, {
-                    include: [
-                        {
-                            model: Professor
-                        },
-                        {
-                            model: Turma,
-                            include: {model: Curso}
-                        }
-                    ]
-                }).then(function (diario){
-
-                    permuta.substituto = professor
-                    permuta.diario = diario
-                    console.dir(permuta)
-                    enviarEmailProfessor(permuta)
-                    req.flash('success_msg', 'Permuta criada com sucesso!')
-                    res.redirect('/permuta/listar')
-                })
-            })
-        })
-        //Falta criar a construção da solicitação
-
-    },
     listar: function (req, res){
         Professor.findOne({
             where: {
