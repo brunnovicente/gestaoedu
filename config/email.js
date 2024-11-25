@@ -1,5 +1,6 @@
 // config/nodemailerConfig.js
-const nodemailer = require('nodemailer');
+//const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 // Looking to send emails in production? Check out our Email API/SMTP product!
 var transport = nodemailer.createTransport({
@@ -11,4 +12,4 @@ var transport = nodemailer.createTransport({
     }
 });
 
-module.exports = transport;
+export default transport;
