@@ -50,10 +50,11 @@ servidor.engine('handlebars', handlebars.engine({
             const day = String(d.getDate()).padStart(2, '0')
             const month = String(d.getMonth() + 1).padStart(2, '0') // Mês começa do 0
             const year = d.getFullYear()
-            const hours = String(d.getHours()).padStart(2, '0')
-            const minutes = String(d.getMinutes()).padStart(2, '0')
-            const seconds = String(d.getSeconds()).padStart(2, '0')
-            return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+            // const hours = String(d.getHours()).padStart(2, '0')
+            // const minutes = String(d.getMinutes()).padStart(2, '0')
+            // const seconds = String(d.getSeconds()).padStart(2, '0')
+            //return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+            return `${day}/${month}/${year}`
         },
         categoriaUsuario: function (categoria){
             switch (categoria) {
@@ -62,6 +63,25 @@ servidor.engine('handlebars', handlebars.engine({
                 case 2: return "Supremo";
             }
         },
+        defineHorario: function (horario){
+            var horarios = horario.split(' / ')
+            return horarios
+        },
+        diaSemana: function(dateString) {
+            const days = [
+                'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+            ];
+            const date = new Date(dateString);
+            if (isNaN(date)) return 'Invalid date'; // Validação básica
+            return days[date.getDay()];
+        },
+        statusPermuta:function(status){
+            switch (status) {
+                case 0: return "Permutado";
+                case 1: return "Devolvido";
+            }
+        }
+        ,
         igual:function (a,b){
             return a === b
         }
@@ -82,7 +102,7 @@ servidor.use(express.static(path.join(__dirname, 'public')));
 ///////////////////
 
 servidor.get("/", (req, res) => {
-    res.redirect('/principal')
+    res.redirect('/permuta/listar')
 })
 
 //Grupos de Rotas

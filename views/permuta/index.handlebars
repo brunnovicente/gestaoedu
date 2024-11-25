@@ -1,0 +1,25 @@
+<nav class="navbar bg-body-tertiary container-sm mb-2">
+    <div class="container-fluid">
+        <h4 href="#">Permutas</h4>
+    </div>
+</nav>
+<div class="container-sm">
+<table class="table table-striped">
+    <tr>
+        <th>DIARIO</th>
+        <th>DATA</th>
+        <th>DIA</th>
+        <th>HORARIOS</th>
+        <th>STATUS</th>
+    </tr>
+    {{#each permutas}}
+        <tr>
+            <td>{{diario.descricao}}</td>
+            <td>{{formatDate data}}</td>
+            <td>{{dia}}</td>
+            <td>{{horarios}}</td>
+            <td>{{statusPermuta status}}</td>
+        </tr>
+    {{/each}}
+</table>
+</div>

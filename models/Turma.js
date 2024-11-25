@@ -15,6 +15,10 @@ const Turma = banco.sequelize.define('turmas', {
         type: banco.Sequelize.STRING(100),
         allowNull: false
     },
+    semestre:{
+        type: banco.Sequelize.INTEGER,
+        allowNull: false
+    },
     ano:{
         type: banco.Sequelize.INTEGER,
         allowNull: false
