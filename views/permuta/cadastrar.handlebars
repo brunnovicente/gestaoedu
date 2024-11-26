@@ -32,7 +32,8 @@
             <div class="row mb-2">
                 <div class="col-3">
                     <label>DATA</label>
-                    <input type="date" name="data" class="form-control">
+                    <input type="date" id="data" name="data" class="form-control">
+
                 </div>
                 <div class="col-3 ms-5">
                     <label class="d-block">HORARIOS</label>
@@ -61,3 +62,14 @@
         </form>
     </div>
 </div>
+
+<script>
+    // Obter a data atual
+    const today = new Date();
+
+    // Formatar a data no padrão YYYY-MM-DD
+    const formattedDate = today.toISOString().split('T')[0];
+
+    // Atribuir a data formatada ao input
+    document.getElementById('data').value = formattedDate;
+</script>
