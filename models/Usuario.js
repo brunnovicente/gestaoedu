@@ -25,10 +25,16 @@ const Usuario = banco.sequelize.define('usuarios', {
     },
 })
 
-Usuario.belongsTo(Professor, {
+await Usuario.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
+    alias: 'professor',
 })
+
+await Professor.hasOne(Usuario, {
+    foreignKey: 'professor_id',
+    alias: 'usuario'
+});
 
 export default Usuario

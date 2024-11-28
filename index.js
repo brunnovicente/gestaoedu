@@ -58,9 +58,11 @@ servidor.engine('handlebars', handlebars.engine({
         },
         categoriaUsuario: function (categoria){
             switch (categoria) {
-                case 0: return "Docente";
-                case 1: return "Coordenador";
-                case 2: return "Supremo";
+                case 0: return "Discente";
+                case 1: return "Docente";
+                case 2: return "Coordenador";
+                case 3: return "Departamento Ensino";
+                case 4: return "Supremo";
             }
         },
         defineHorario: function (horario){
@@ -114,5 +116,8 @@ servidor.use('/permuta', permuta);
 
 import usuario from './routes/usuario.js'
 servidor.use('/usuario', usuario);
+
+import professor from './routes/professor.js'
+servidor.use('/professor', professor)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))

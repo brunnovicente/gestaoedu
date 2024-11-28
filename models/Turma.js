@@ -34,4 +34,5 @@ Turma.belongsTo(Curso, {
     constraint: true,
     onDelete: 'CASCADE'
 })
+
 export default Turma
