@@ -4,6 +4,63 @@
     </div>
 </nav>
 <div class="container-sm">
+
+    {{#each permutas}}
+
+        <div class="p-3 m-3 border rounded rounded-1" style="background-color: #DCDCDC;">
+
+            <div class="row">
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>DIÁRIO</strong>: {{diario.descricao}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>PROFESSOR</strong>: {{diario.professore.nome}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>TURMA</strong>: {{diario.turma.descricao}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>CURSO</strong>: {{diario.turma.curso.descricao}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>DATA</strong>: {{formatDate data}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>DIA</strong>: {{dia}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>HORÁRIOS</strong>: {{horarios}}
+                        </div>
+                    </div>
+                </div> <!--COLUNA DO PROFESSOR-->
+
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>DIÁRIO</strong>: {{substituto.descricao}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    {{/each}}
+
 <table class="table table-striped">
     <tr>
         <th>DIARIO</th>
@@ -19,6 +76,16 @@
             <td>{{dia}}</td>
             <td>{{horarios}}</td>
             <td>{{statusPermuta status}}</td>
+            <td>
+                <button
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalPermuta"
+                        data-id="{{id}}">
+                    Abrir
+                </button>
+            </td>
         </tr>
     {{/each}}
 </table>

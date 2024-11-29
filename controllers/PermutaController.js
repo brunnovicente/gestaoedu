@@ -4,6 +4,8 @@ import Turma from "../models/Turma.js";
 import Curso from "../models/Curso.js";
 import Permuta from "../models/Permuta.js";
 import tranporter from "../config/email.js"
+import Usuario from "../models/Usuario.js";
+import permuta from "../models/Permuta.js";
 
 
 function definirDia(data){
@@ -120,13 +122,33 @@ export default {
         })
 
         //Falta criar a construção da solicitação
+        
 
     },
     index: function(req, res){
         Permuta.findAll({
-            include:{
-                model: Diario
-            }
+            include:[
+                {
+                    model: Diario,
+                    as: 'diario',
+                    include:[
+                        {
+                            model: Professor,
+                        },
+                        {
+                            model: Turma,
+                            include: Curso
+                        }
+                    ]
+                },
+                {
+                    model: Diario,
+                    as: 'substituto',
+                    include:{
+                        model: Professor
+                    }
+                }
+            ]
         }).then(function(permutas){
             res.render('permuta/index', {permutas: permutas})
         })
