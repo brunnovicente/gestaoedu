@@ -10,5 +10,6 @@ router.post('/cadastrar', PermutaController.salvar)
 router.get('/listar', (req, res) => res.render('permuta/listar', {layout: 'secundario'}))
 router.post('/listar', PermutaController.listar)
 router.get('/minhas/:id', PermutaController.minhas)
+router.get('/abrir/:id', coordenador, PermutaController.abrir)
 
 export default router;

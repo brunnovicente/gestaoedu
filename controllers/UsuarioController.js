@@ -2,7 +2,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import Usuario from "../models/Usuario.js";
-
+import Professor from "../models/Professor.js";
+import auxiliar from "../helpers/auxiliar.js"
 const router = express.Router();
 
 export default {
@@ -50,6 +51,23 @@ export default {
             res.flash('success_msg', 'Professor promovido com sucesso!')
             req.redirect('/professor')
         })
-    }//fim do promover
+    },//fim do promover
+    codigo: function(req,res){
+        const siape = req.body.siape
+        Usuario.findOne({username:siape}, {
+            include: {
+                model:Professor,
+                as: 'professor'
+            }
+        }).then(function (usuario) {
+            if(usuario.username === siape){
+                let codigo = auxiliar.gerarCodigo(5)
+                Usuario.update({codigo: codigo}, {where: {username: siape}}).then(function () {
+                    req.flash('success_msg', 'Código enviado para o e-mail '+usuario.professor.email)
+                    res.redirect('/permuta/listar')
+                })
+            }
+        })
+    },
 
 }//Fim do Módulo

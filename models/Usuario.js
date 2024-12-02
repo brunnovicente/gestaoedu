@@ -23,6 +23,10 @@ const Usuario = banco.sequelize.define('usuarios', {
         type: banco.Sequelize.INTEGER,
         default: 0
     },
+    codigo: {
+        type: banco.Sequelize.STRING(20),
+        default: null
+    }
 })
 
 await Usuario.belongsTo(Professor, {

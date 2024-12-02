@@ -79,8 +79,8 @@ servidor.engine('handlebars', handlebars.engine({
         },
         statusPermuta:function(status){
             switch (status) {
-                case 0: return "Em aberto";
-                case 1: return "Pendente";
+                case 0: return "Pendente";
+                case 1: return "Aberto";
                 case 2: return "Finalizado"
             }
         },

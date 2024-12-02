@@ -4,8 +4,10 @@ import Turma from "../models/Turma.js";
 import Curso from "../models/Curso.js";
 import Permuta from "../models/Permuta.js";
 import tranporter from "../config/email.js"
+import auxiliar from "../helpers/auxiliar.js"
 import Usuario from "../models/Usuario.js";
 import permuta from "../models/Permuta.js";
+
 
 
 function definirDia(data){
@@ -101,6 +103,10 @@ function enviarEmailCoordenador(permuta){
                         <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.descricao}</td>
                     </tr>
                     <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">PROFESSOR</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.professor.nome}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
                         <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIÁRIO SUBSTITUTO</td>
                         <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
                     </tr>
@@ -132,6 +138,31 @@ function enviarEmailCoordenador(permuta){
 }
 
 export default {
+    abrir: function (req, res){
+        Permuta.update({
+            status: 1
+        }, {
+            where:{
+                id: req.params.id
+            }
+        }).then(function () {
+            req.flash('success_msg', 'Permuta aberta com sucesso!')
+            res.redirect('/permuta')
+        })
+    },
+    fechar: function(req,res){
+        Permuta.update({
+            status: 2
+        }, {
+            where:{
+                id: req.params.id
+            }
+        }).then(function () {
+            req.flash('success_msg', 'Permuta aberta com sucesso!')
+            res.redirect('/permuta')
+        })
+    },
+
     salvar: function (req, res){
         const permuta = {
             data: req.body.data,
@@ -153,7 +184,7 @@ export default {
                 permuta.substituto = substituto
             }
             var diario = await Diario.findByPk(permuta.diario_id, {
-                include:{
+                include:[{
                     model: Turma,
                     include:{
                         model: Curso,
@@ -162,7 +193,10 @@ export default {
                             as: 'professor'
                         }
                     }
-                }
+                },{
+                    model: Professor,
+                    as: 'professor'
+                }]
             })
             permuta.diario = diario
 
