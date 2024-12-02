@@ -28,13 +28,14 @@ const Diario = banco.sequelize.define('diarios', {
 Diario.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
+    as: 'professor'
 })
 
 Diario.belongsTo(Turma, {
     foreignKey: 'turma_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
 })
 
 export default Diario

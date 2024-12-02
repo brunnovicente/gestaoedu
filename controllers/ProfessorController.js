@@ -6,7 +6,7 @@ export default {
         Professor.findAll({
             include:{
                 model: Usuario,
-                alias: 'professor'
+                as: 'usuario'
             }
         }).then(function (professores) {
             res.render('professor/index', {professores: professores})

@@ -5,7 +5,7 @@
         </h3>
         <div class="col-2 d-flex justify-content-end">
             <form method="post" action="/permuta/listar">
-                <input hidden="hidden" type="text" value="{{diario.professore.siape}}" name="busca">
+                <input hidden="hidden" type="text" value="{{diario.professor.siape}}" name="busca">
                 <button type="submit" href="/permuta/listar" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</button>
             </form>
 
@@ -14,7 +14,7 @@
     <div class="container">
         <form method="post" action="/permuta/cadastrar">
             <label>PROFESSOR</label>
-            <input type="text" name="professor" value="{{diario.professore.nome}}" class="form-control mb-2" disabled>
+            <input type="text" name="professor" value="{{diario.professor.nome}}" class="form-control mb-2" disabled>
             <label>CURSO</label>
             <input type="text" name="curso" value="{{diario.turma.curso.descricao}}" class="form-control mb-2" disabled>
             <div class="row">
@@ -51,7 +51,7 @@
             <select id="substituto" name="substituto" class="form-select">
                 <option value="">Sem substituto</option> <!-- Opção em branco -->
                 {{#each substitutos}}
-                    <option value="{{id}}"><strong>{{descricao}}</strong> - {{professore.nome}}</option>
+                    <option value="{{id}}"><strong>{{descricao}}</strong> - {{professor.nome}}</option>
                 {{/each}}
             </select>
 

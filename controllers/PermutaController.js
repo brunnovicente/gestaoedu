@@ -31,27 +31,46 @@ function formatarData(data){
     const day = String(d.getDate()).padStart(2, '0')
     const month = String(d.getMonth() + 1).padStart(2, '0') // Mês começa do 0
     const year = d.getFullYear()
-    // const hours = String(d.getHours()).padStart(2, '0')
-    // const minutes = String(d.getMinutes()).padStart(2, '0')
-    // const seconds = String(d.getSeconds()).padStart(2, '0')
-    //return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
     return `${day}/${month}/${year}`
 }
 
 function enviarEmailSubstituto(permuta){
     const config = {
         from: 'coordenacao@batcaverna.online',
-        to: permuta.substituto.professore.email,
+        to: permuta.substituto.professor.email,
         subject: 'Nova Aula - '+formatarData(permuta.data),
-        html:
-        '<h2>Nova aula foi atribuída a você:</h2>'+
-         '<strong>CURSO: </strong>'+permuta.diario.turma.curso.descricao+'<br>'+
-            '<strong>TURMA: </strong>'+permuta.diario.turma.descricao+'<br>'+
-            '<strong>SEMESTRE: </strong>'+permuta.diario.turma.ano+'.'+permuta.diario.turma.semestre+'<br>'+
-            '<strong>DIARIO: </strong>'+permuta.substituto.descricao+'<br>'+
-            '<strong>DATA: </strong> '+formatarData(permuta.data)+'<br>'+
-            '<strong>DIA: </strong>'+permuta.dia+'<br>'+
-            '<strong>HORÁRIOS: </strong>'+permuta.horarios
+        html:`<h2>NOVA AULA ATRIBUIDA A VOCÊ</h2>
+                <table style="border-collapse: collapse; text-align: left;">
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">CURSO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.curso.descricao}</td>
+                    </tr> 
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">TURMA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.descricao}</td>
+                    </tr> 
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">SEMESTRE</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.ano}.${permuta.diario.turma.semestre}</td>
+                    </tr> 
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">DIARIO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">DATA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${formatarData(permuta.data)}</td>
+                    </tr>   
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">DIA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.dia}</td>
+                    </tr>   
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px;">HORÁRIOS</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.horarios}</td>
+                    </tr>                      
+                </table>`
+
     }
     tranporter.sendMail(config).then(function (mail){
         console.log('Email enviado ao professor substituto')
@@ -59,22 +78,53 @@ function enviarEmailSubstituto(permuta){
 }
 
 function enviarEmailCoordenador(permuta){
-    console.dir(permuta.diario.turma.curso)
     const config = {
         from: 'coordenacao@batcaverna.online',
-        to: permuta.diario.turma.curso.professore.email,
+        to: permuta.diario.turma.curso.professor.email,
         subject: 'Nova Aula - '+formatarData(permuta.data),
-        html:
-            '<h2>Uma Nova Troca/Ausência foi registrada</h2>'+
-            '<strong>CURSO: </strong>'+permuta.diario.turma.curso.descricao+'<br>'+
-            '<strong>TURMA: </strong>'+permuta.diario.turma.descricao+'<br>'+
-            '<strong>SEMESTRE: </strong>'+permuta.diario.turma.ano+'.'+permuta.diario.turma.semestre+'<br>'+
-            '<strong>DIARIO: </strong>'+permuta.diario.descricao+'<br>'+
-            '<strong>DIARIO SUBSTITUTO: </strong>'+permuta.substituto.descricao+'<br>'+
-            '<strong>PROFESSOR SUBTITUTO: </strong>'+permuta.substituto.professore.nome+'<br>'+
-            '<strong>DATA: </strong> '+formatarData(permuta.data)+'<br>'+
-            '<strong>DIA: </strong>'+permuta.dia+'<br>'+
-            '<strong>HORÁRIOS: </strong>'+permuta.horarios
+        html:`<h2>Uma Nova Troca/Ausência foi registrada</h2>
+                <table style="border-collapse: collapse; text-align: left;">
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">CURSO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.curso.descricao}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">TURMA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.descricao}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">SEMESTRE</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.turma.ano}.${permuta.diario.turma.semestre}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIÁRIO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.diario.descricao}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIÁRIO SUBSTITUTO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">PROFESSOR SUBSTITUTO</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.professor.nome}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DATA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${formatarData(permuta.data)}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.dia}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">HORÁRIOS</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.horarios}</td>
+                    </tr>
+                    <tr style="border: 1px solid #ddd;">
+                        <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">JUSTIFICATIVA</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.justificativa}</td>
+                    </tr>
+                </table>`
     }
     tranporter.sendMail(config).then(function (mail){
         console.log('Email enviado ao coordenador')
@@ -96,7 +146,8 @@ export default {
             if(permuta.substituto_id) {
                 var substituto = await Diario.findByPk(permuta.substituto_id, {
                     include: {
-                        model: Professor
+                        model: Professor,
+                        as: 'professor'
                     }
                 })
                 permuta.substituto = substituto
@@ -108,6 +159,7 @@ export default {
                         model: Curso,
                         include:{
                             model: Professor,
+                            as: 'professor'
                         }
                     }
                 }
@@ -134,6 +186,7 @@ export default {
                     include:[
                         {
                             model: Professor,
+                            as: 'professor'
                         },
                         {
                             model: Turma,
@@ -145,7 +198,8 @@ export default {
                     model: Diario,
                     as: 'substituto',
                     include:{
-                        model: Professor
+                        model: Professor,
+                        as: 'professor'
                     }
                 }
             ]
@@ -161,13 +215,17 @@ export default {
             include:[
                 {
                     model: Professor,
+                    as: 'professor'
                 },
                 {
                     model: Turma,
+                    as: 'turma',
                     include:{
                         model: Curso,
+                        as: 'curso',
                         include:{
-                            model: Professor
+                            model: Professor,
+                            as: 'professor'
                         }
                     }
                 }
@@ -179,13 +237,12 @@ export default {
                 },
                 include:{
                     model: Professor,
-
+                    as: 'professor'
                 }
             }).then(function (substitutos){
 
                 res.render('permuta/cadastrar', {diario: diario, substitutos: substitutos});
             })
-
         })
 
     },
@@ -199,7 +256,9 @@ export default {
                  where: {professor_id: professor.id},
                  include:{
                      model: Turma,
-                     include: Curso
+                     include: {
+                         model: Curso,
+                     }
                  }
              }).then((diarios) => {
                  res.render('permuta/listar', {layout: 'secundario', professor: professor, diarios: diarios});
@@ -209,22 +268,32 @@ export default {
     minhas: function (req, res){
         var id = req.params.id;
         Professor.findByPk(id).then(professor => {
-
             Permuta.findAll({
+                // where:{
+                //     status: 0
+                // },
                 include: [
                     {
                         model: Diario,
-                        alias: 'diario',
-                        where: {
-                            professor_id: id
+                        as: 'diario',
+                        include:{
+                            model: Professor,
+                            as: 'professor'
                         }
                     },
                     {
                         model: Diario,
-                        alias: 'substituto',
-                        include: {
+                        as: 'substituto',
+                        include: [{
                             model: Turma,
-                            include: Curso
+                            include: Curso,
+                            as: 'turma'
+                        },{
+                            model: Professor,
+                            as: 'professor'
+                        }],
+                        where: {
+                            professor_id: id
                         }
                     }
                 ]

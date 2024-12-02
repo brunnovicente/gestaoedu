@@ -29,12 +29,12 @@ await Usuario.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,
     onDelete: 'CASCADE',
-    alias: 'professor',
+    as: 'professor',
 })
 
 await Professor.hasOne(Usuario, {
     foreignKey: 'professor_id',
-    alias: 'usuario'
+    as: 'usuario'
 });
 
 export default Usuario

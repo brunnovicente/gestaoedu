@@ -4,89 +4,77 @@
     </div>
 </nav>
 <div class="container-sm">
-
+    <div class="d-flex justify-content-center w-25 mx-auto">
+        <div class="me-3">FILTRO: </div>
+        <select class="form-select" id="status" onchange="filtrar()">
+            <option>Todas</option>
+            <option>Em Aberto</option>
+            <option>Pendente</option>
+            <option>Finalizada</option>
+        </select>
+    </div>
     {{#each permutas}}
 
-        <div class="p-3 m-3 border rounded rounded-1" style="background-color: #DCDCDC;">
+        <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
 
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-dark me-2" href="#">Abrir</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-dark me-2" href="#">Excluir</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-dark me-2" href="#">Editar</a>
+                </li>
+            </ul>
+
+            <div class="row mb-3">
+                <div class="col-sm">
+                    <strong>DIÁRIO</strong>: {{diario.descricao}}
+                </div>
+                <div class="col-sm">
+                    <strong>PROFESSOR</strong>: {{diario.professor.nome}}
+                </div>
+                <!--COLUNA DO PROFESSOR-->
+            </div>
             <div class="row">
                 <div class="col-sm">
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>DIÁRIO</strong>: {{diario.descricao}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>PROFESSOR</strong>: {{diario.professore.nome}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>TURMA</strong>: {{diario.turma.descricao}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>CURSO</strong>: {{diario.turma.curso.descricao}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>DATA</strong>: {{formatDate data}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>DIA</strong>: {{dia}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>HORÁRIOS</strong>: {{horarios}}
-                        </div>
-                    </div>
-                </div> <!--COLUNA DO PROFESSOR-->
-
-                <div class="col-sm">
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>DIÁRIO</strong>: {{substituto.descricao}}
-                        </div>
-                    </div>
+                    <strong>TURMA</strong>: {{diario.turma.descricao}}
                 </div>
-
+                <div class="col-sm">
+                    <strong>DATA</strong>: {{formatDate data}}
+                </div>
+                <div class="col-sm">
+                    <strong>DIA</strong>: {{dia}}
+                </div>
+                <div class="col-sm">
+                    <strong>HORARIOS: </strong>{{horarios}}
+                </div>
             </div>
 
+            <hr>
+            <strong>Dados do Substituto</strong>
+            <div class="row mb-3 mt-2">
+                <div class="col-sm-5">
+                    <strong>DIÁRIO</strong>: {{substituto.descricao}}
+                </div>
+                <div class="col-sm-5">
+                    <strong>PROFESSOR</strong>: {{substituto.professor.nome}}
+                </div>
+                <div class="col-sm-2">
+                    <strong>STATUS: </strong> {{statusPermuta status}}
+                </div>
+                <!--COLUNA DO PROFESSOR-->
+            </div>
         </div>
     {{/each}}
 
-<table class="table table-striped">
-    <tr>
-        <th>DIARIO</th>
-        <th>DATA</th>
-        <th>DIA</th>
-        <th>HORARIOS</th>
-        <th>STATUS</th>
-    </tr>
-    {{#each permutas}}
-        <tr>
-            <td>{{diario.descricao}}</td>
-            <td>{{formatDate data}}</td>
-            <td>{{dia}}</td>
-            <td>{{horarios}}</td>
-            <td>{{statusPermuta status}}</td>
-            <td>
-                <button
-                        type="button"
-                        class="btn btn-sm btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalPermuta"
-                        data-id="{{id}}">
-                    Abrir
-                </button>
-            </td>
-        </tr>
-    {{/each}}
-</table>
 </div>
+
+<script>
+    function filtrar(){
+        var select = document.getElementById('status')
+        alert(select.value)
+    }
+</script>

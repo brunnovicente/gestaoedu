@@ -2,8 +2,9 @@ import express from 'express';
 const router = express.Router();
 
 import PermutaController from "../controllers/PermutaController.js";
+import {coordenador} from "../helpers/permissao.js"
 
-router.get('/', PermutaController.index)
+router.get('/', coordenador, PermutaController.index)
 router.get('/cadastrar/:id', PermutaController.cadastrar)
 router.post('/cadastrar', PermutaController.salvar)
 router.get('/listar', (req, res) => res.render('permuta/listar', {layout: 'secundario'}))

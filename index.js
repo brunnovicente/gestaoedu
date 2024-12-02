@@ -79,11 +79,18 @@ servidor.engine('handlebars', handlebars.engine({
         },
         statusPermuta:function(status){
             switch (status) {
-                case 0: return "Permutado";
-                case 1: return "Devolvido";
+                case 0: return "Em aberto";
+                case 1: return "Pendente";
+                case 2: return "Finalizado"
             }
-        }
-        ,
+        },
+        corPermuta: function(status){
+            switch (status) {
+                case 0: return "#DCDCDC";
+                case 1: return "#FFC0CB";
+                case 2: return "#90EE90"
+            }
+        },
         igual:function (a,b){
             return a === b
         }

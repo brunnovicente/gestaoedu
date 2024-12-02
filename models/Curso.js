@@ -20,6 +20,7 @@ const Curso = banco.sequelize.define('cursos', {
 Curso.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
+    as: 'professor'
 })
 export default Curso
