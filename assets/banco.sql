@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `diarios` (
                                          KEY `turma_id` (`turma_id`),
                                          CONSTRAINT `diarios_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `professores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                                          CONSTRAINT `diarios_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turmas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela gestaoedu.diarios: ~12 rows (aproximadamente)
 INSERT INTO `diarios` (`id`, `codigo`, `descricao`, `horario`, `status`, `createdAt`, `updatedAt`, `professor_id`, `turma_id`) VALUES
@@ -71,8 +71,7 @@ INSERT INTO `diarios` (`id`, `codigo`, `descricao`, `horario`, `status`, `create
                                                                                                                                    (9, 112093, 'SUP.06259 - Programação II', '4N34 / 5N45', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 13, 1),
                                                                                                                                    (10, 112092, 'SUP.06264 - Interação Humano-Computador', '2N45', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 32, 1),
                                                                                                                                    (11, 112091, 'SUP.06265 - Atividade Curricular de Extensão I', '5N3 / 6N345', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 30, 1),
-                                                                                                                                   (12, 112090, 'SUP.06260 - Álgebra Linear', '5N12 / 6N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 35, 1),
-                                                                                                                                   (13, 121212, 'Artes de Besteira', '5N12 / 6N34', 1, '2024-11-27 17:01:02', '2024-11-27 17:01:06', 22, 1);
+                                                                                                                                   (12, 112090, 'SUP.06260 - Álgebra Linear', '5N12 / 6N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 35, 1);
 
 -- Copiando estrutura para tabela gestaoedu.permutas
 DROP TABLE IF EXISTS `permutas`;
@@ -92,13 +91,14 @@ CREATE TABLE IF NOT EXISTS `permutas` (
                                           KEY `substituto_id` (`substituto_id`),
                                           CONSTRAINT `permutas_ibfk_1` FOREIGN KEY (`diario_id`) REFERENCES `diarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                                           CONSTRAINT `permutas_ibfk_2` FOREIGN KEY (`substituto_id`) REFERENCES `diarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela gestaoedu.permutas: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela gestaoedu.permutas: ~4 rows (aproximadamente)
 INSERT INTO `permutas` (`id`, `data`, `dia`, `horarios`, `justificativa`, `status`, `createdAt`, `updatedAt`, `diario_id`, `substituto_id`) VALUES
-                                                                                                                                                (33, '2024-11-26 21:00:00', 'Quarta-feira', '3N34', 'Participação em Evento Científico', 0, '2024-11-27 17:01:49', '2024-11-27 17:01:49', 8, 13),
-                                                                                                                                                (34, '2024-11-26 21:00:00', 'Quarta-feira', '4N34', 'A professora quer besteira de aula de artes', 0, '2024-11-27 17:57:02', '2024-11-27 17:57:02', 9, 13),
-                                                                                                                                                (35, '2024-12-02 21:00:00', 'Terça-feira', '6N34', 'Porque eu quis', 0, '2024-11-27 18:12:15', '2024-11-27 18:12:15', 1, 2);
+                                                                                                                                                (1, '2024-12-03 21:00:00', 'Quarta-feira', '5N12', 'Evento Científico', 1, '2024-12-02 08:51:38', '2024-12-02 09:19:48', 1, 4),
+                                                                                                                                                (2, '2024-12-03 21:00:00', 'Quarta-feira', '4N34', 'Evento Científico', 0, '2024-12-02 08:53:21', '2024-12-02 08:53:21', 9, 8),
+                                                                                                                                                (3, '2024-12-11 21:00:00', 'Quinta-feira', '2N45', 'Reunião de Coordenadores', 0, '2024-12-02 08:54:37', '2024-12-02 08:54:37', 2, 1),
+                                                                                                                                                (4, '2024-12-01 21:00:00', 'Segunda-feira', '2N23', 'Reunião de Coordenadores', 0, '2024-12-02 08:56:51', '2024-12-02 08:56:51', 8, 9);
 
 -- Copiando estrutura para tabela gestaoedu.professores
 DROP TABLE IF EXISTS `professores`;
@@ -132,7 +132,7 @@ INSERT INTO `professores` (`id`, `nome`, `siape`, `email`, `createdAt`, `updated
                                                                                          (16, 'Francicleia Vieira Ribeiro de Oliveira', '2571587', 'francicleia.ribeiro@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
                                                                                          (17, 'Francilio Benicio Santos de Moraes Trindade', '1508992', 'fbenicio@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
                                                                                          (18, 'Francisca Marcia Costa de Souza', '1963983', 'francisca.souza@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
-                                                                                         (19, 'Francisco Alan de Oliveira Santos', '2331838', 'franciscoalan.santos@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
+                                                                                         (19, 'Francisco Alan de Oliveira Santos', '2331838', 'bruno.batcaverna@gmail.com', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
                                                                                          (20, 'Fredson Anderson Brito de Castro', '2408251', 'fredson.castro@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
                                                                                          (21, 'Gielson Vitor Oliveira Veras', '1258500', 'gielson.veras@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
                                                                                          (22, 'Glicia Lorainne Moreira Silva', '1006036', 'glicia.silva@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09'),
@@ -183,60 +183,61 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
                                           `id` int(11) NOT NULL AUTO_INCREMENT,
                                           `username` varchar(100) NOT NULL,
-                                          `password` varchar(250) NOT NULL,
+                                          `password` varchar(250) DEFAULT NULL,
                                           `categoria` int(11) DEFAULT NULL,
                                           `status` int(11) DEFAULT NULL,
                                           `createdAt` datetime NOT NULL,
                                           `updatedAt` datetime NOT NULL,
                                           `professor_id` int(11) DEFAULT NULL,
+                                          `codigo` varchar(20) DEFAULT NULL,
                                           PRIMARY KEY (`id`),
                                           KEY `professor_id` (`professor_id`),
                                           CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `professores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela gestaoedu.usuarios: ~41 rows (aproximadamente)
-INSERT INTO `usuarios` (`id`, `username`, `password`, `categoria`, `status`, `createdAt`, `updatedAt`, `professor_id`) VALUES
-                                                                                                                           (1, '1228722', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 1),
-                                                                                                                           (2, '2271969', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 2),
-                                                                                                                           (3, '1993705', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 3),
-                                                                                                                           (4, '1963721', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 4),
-                                                                                                                           (5, '1964083', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 5),
-                                                                                                                           (6, '1620844', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 6),
-                                                                                                                           (7, '1226388', '$2b$10$LwR.kNW.usH3qkFpYTURNuVnHBoD.37ODppBaeFgrNGztqZ4woQYq', 2, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 7),
-                                                                                                                           (8, '2339684', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 8),
-                                                                                                                           (9, '1951613', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 9),
-                                                                                                                           (10, '1266884', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 10),
-                                                                                                                           (11, '3344988', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 11),
-                                                                                                                           (12, '1836367', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 12),
-                                                                                                                           (13, '1132172', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 13),
-                                                                                                                           (14, '2345177', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 14),
-                                                                                                                           (15, '1860969', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 15),
-                                                                                                                           (16, '2571587', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 16),
-                                                                                                                           (17, '1508992', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 17),
-                                                                                                                           (18, '1963983', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 18),
-                                                                                                                           (19, '2331838', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 19),
-                                                                                                                           (20, '2408251', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 20),
-                                                                                                                           (21, '1258500', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 21),
-                                                                                                                           (22, '1006036', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 22),
-                                                                                                                           (23, '2342286', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 23),
-                                                                                                                           (24, '3394152', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 24),
-                                                                                                                           (25, '3358128', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 25),
-                                                                                                                           (26, '2282550', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 26),
-                                                                                                                           (27, '2331959', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 27),
-                                                                                                                           (28, '3423152', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 28),
-                                                                                                                           (29, '1145981', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 29),
-                                                                                                                           (30, '1886837', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 30),
-                                                                                                                           (31, '1915383', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 31),
-                                                                                                                           (32, '3421880', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 32),
-                                                                                                                           (33, '3077773', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 33),
-                                                                                                                           (34, '1903931', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 34),
-                                                                                                                           (35, '1699038', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 35),
-                                                                                                                           (36, '2020069', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 36),
-                                                                                                                           (37, '1921426', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 37),
-                                                                                                                           (38, '2311281', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 38),
-                                                                                                                           (39, '1293499', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 39),
-                                                                                                                           (40, '1837473', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 40),
-                                                                                                                           (41, '1877101', '', 1, 0, '2024-11-26 16:48:05', '2024-11-26 16:48:05', 41);
+INSERT INTO `usuarios` (`id`, `username`, `password`, `categoria`, `status`, `createdAt`, `updatedAt`, `professor_id`, `codigo`) VALUES
+                                                                                                                                     (2, '1228722', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 1, NULL),
+                                                                                                                                     (3, '2271969', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 2, NULL),
+                                                                                                                                     (4, '1993705', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 3, NULL),
+                                                                                                                                     (5, '1963721', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 4, NULL),
+                                                                                                                                     (6, '1964083', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 5, NULL),
+                                                                                                                                     (7, '1620844', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 6, NULL),
+                                                                                                                                     (8, '1226388', '$2b$10$LwR.kNW.usH3qkFpYTURNuVnHBoD.37ODppBaeFgrNGztqZ4woQYq', 2, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 7, NULL),
+                                                                                                                                     (9, '2339684', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 8, NULL),
+                                                                                                                                     (10, '1951613', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 9, NULL),
+                                                                                                                                     (11, '1266884', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 10, NULL),
+                                                                                                                                     (12, '3344988', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 11, NULL),
+                                                                                                                                     (13, '1836367', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 12, NULL),
+                                                                                                                                     (14, '1132172', '$2b$10$LwR.kNW.usH3qkFpYTURNuVnHBoD.37ODppBaeFgrNGztqZ4woQYq', 1, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 13, NULL),
+                                                                                                                                     (15, '2345177', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 14, NULL),
+                                                                                                                                     (16, '1860969', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 15, NULL),
+                                                                                                                                     (17, '2571587', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 16, NULL),
+                                                                                                                                     (18, '1508992', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 17, NULL),
+                                                                                                                                     (19, '1963983', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 18, NULL),
+                                                                                                                                     (20, '2331838', '$2b$10$LwR.kNW.usH3qkFpYTURNuVnHBoD.37ODppBaeFgrNGztqZ4woQYq', 1, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 19, NULL),
+                                                                                                                                     (21, '2408251', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 20, NULL),
+                                                                                                                                     (22, '1258500', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 21, NULL),
+                                                                                                                                     (23, '1006036', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 22, NULL),
+                                                                                                                                     (24, '2342286', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 23, NULL),
+                                                                                                                                     (25, '3394152', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 24, NULL),
+                                                                                                                                     (26, '3358128', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 25, NULL),
+                                                                                                                                     (27, '2282550', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 26, NULL),
+                                                                                                                                     (28, '2331959', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 27, NULL),
+                                                                                                                                     (29, '3423152', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 28, NULL),
+                                                                                                                                     (30, '1145981', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 29, NULL),
+                                                                                                                                     (31, '1886837', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 30, NULL),
+                                                                                                                                     (32, '1915383', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 31, NULL),
+                                                                                                                                     (33, '3421880', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 32, NULL),
+                                                                                                                                     (34, '3077773', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 33, NULL),
+                                                                                                                                     (35, '1903931', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 34, NULL),
+                                                                                                                                     (36, '1699038', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 35, NULL),
+                                                                                                                                     (37, '2020069', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 36, NULL),
+                                                                                                                                     (38, '1921426', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 37, NULL),
+                                                                                                                                     (39, '2311281', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 38, NULL),
+                                                                                                                                     (40, '1293499', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 39, NULL),
+                                                                                                                                     (41, '1837473', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 40, NULL),
+                                                                                                                                     (42, '1877101', NULL, 0, 0, '2024-11-26 19:50:47', '2024-11-26 19:50:47', 41, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
