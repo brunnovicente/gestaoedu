@@ -32,13 +32,16 @@ const Permuta = banco.sequelize.define('permutas', {
 Permuta.belongsTo(Diario, {
     foreignKey: 'diario_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    as: 'diario',
+    onDelete: 'CASCADE',
+
 })
 
 Permuta.belongsTo(Diario, {
     foreignKey: 'substituto_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    as: 'substituto',
+    onDelete: 'CASCADE',
 })
 
 export default Permuta

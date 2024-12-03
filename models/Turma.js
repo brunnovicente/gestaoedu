@@ -32,6 +32,7 @@ const Turma = banco.sequelize.define('turmas', {
 Turma.belongsTo(Curso, {
     foreignKey: 'curso_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
 })
+
 export default Turma

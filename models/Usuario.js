@@ -23,12 +23,22 @@ const Usuario = banco.sequelize.define('usuarios', {
         type: banco.Sequelize.INTEGER,
         default: 0
     },
+    codigo: {
+        type: banco.Sequelize.STRING(20),
+        default: null
+    }
 })
 
-Usuario.belongsTo(Professor, {
+await Usuario.belongsTo(Professor, {
     foreignKey: 'professor_id',
     constraint: true,
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
+    as: 'professor',
 })
+
+await Professor.hasOne(Usuario, {
+    foreignKey: 'professor_id',
+    as: 'usuario'
+});
 
 export default Usuario

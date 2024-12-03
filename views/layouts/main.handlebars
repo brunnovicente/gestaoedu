@@ -9,18 +9,11 @@
 <body>
 <div class="container-fluid p-0">
     {{>nav-principal}}
-
-    {{#if error}}
-        <div class="alert alert-danger alert-dismissible fade show m-2 container-sm mx-auto" role="alert">
-            {{error}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {{/if}}
     {{>msg}}
-
     {{{body}}}
-
 </div>
 <script src="/js/bootstrap.bundle.js"></script>
+<script src="/js/script.js"></script>
+
 </body>
 </html>

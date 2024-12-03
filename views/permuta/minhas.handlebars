@@ -12,52 +12,64 @@
         </form>
     </div>
 </nav>
+
 <div class="container-sm">
-        <hr>
+<!--    <div class="border border-1 p-3 w-25 mx-auto">-->
+<!--        <form action="/permutas/minhas" method="post">-->
+<!--            <label>STATUS</label>-->
+<!--            <input value="{{professor.id}}" name="id" class="d-none">-->
+<!--            <select class="form-select w-50 d-inline" name="busca">-->
+<!--                <option value="0">Em aberto</option>-->
+<!--                <option value="1">Pendente</option>-->
+<!--                <option value="2">Finalizado</option>-->
+<!--            </select>-->
+<!--            <button class="btn btn-sm btn-success d-inline">Filtrar</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
         {{#each permutas}}
-            <div class="shadow p-2 mt-4" style="background-color: #D3D3D3;">
+
+            <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
+                <div class="row mb-3">
+                    <div class="col-sm">
+                        <strong>DIÁRIO</strong>: {{substituto.descricao}}
+                    </div>
+                    <div class="col-sm">
+                        <strong>PROFESSOR</strong>: {{substituto.professor.nome}}
+                    </div>
+                    <!--COLUNA DO PROFESSOR-->
+                </div>
                 <div class="row">
                     <div class="col-sm">
-                        <label>CURSO</label>
-                        <input type="text" value="{{diario.turma.curso.descricao}}" class="form-control" disabled>
+                        <strong>TURMA</strong>: {{substituto.turma.descricao}}
                     </div>
                     <div class="col-sm">
-                        <label>DIÁRIO</label>
-                        <input type="text" value="{{diario.descricao}}" class="form-control" disabled>
+                        <strong>DATA</strong>: {{formatDate data}}
                     </div>
-                    <div class="col-sm-2">
-                        <label>TURMA</label>
-                        <input type="text" value="{{diario.turma.descricao}}" class="form-control" disabled>
+                    <div class="col-sm">
+                        <strong>DIA</strong>: {{dia}}
                     </div>
-                    <div class="col-sm-2">
-                        <label>SEMESTRE</label>
-                        <input type="text" value="{{diario.turma.ano}}.{{diario.turma.semestre}}" class="form-control" disabled>
+                    <div class="col-sm">
+                        <strong>HORARIOS: </strong>{{horarios}}
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-sm-2">
-                        <label>DATA</label>
-                        <input type="text" value="{{formatDate data}}" class="form-control" disabled>
+
+                <hr>
+                <strong>Dados do Substituído</strong>
+                <div class="row mb-3 mt-2">
+                    <div class="col-sm-5">
+                        <strong>DIÁRIO</strong>: {{diario.descricao}}
+                    </div>
+                    <div class="col-sm-5">
+                        <strong>PROFESSOR</strong>: {{diario.professor.nome}}
                     </div>
                     <div class="col-sm-2">
-                        <label>DIA</label>
-                        <input type="text" value="{{dia}}" class="form-control" disabled>
+                        <strong>STATUS: </strong> {{statusPermuta status}}
                     </div>
-                    <div class="col-sm-2">
-                        <label>HORÁRIOS</label>
-                        <input type="text" value="{{horarios}}" class="form-control" disabled>
-                    </div>
+                    <!--COLUNA DO PROFESSOR-->
                 </div>
             </div>
 
-
-<!--            <tr>-->
-<!--                <td>{{diario.descricao}}</td>-->
-<!--                <td>{{formatDate data}}</td>-->
-<!--                <td>{{dia}}</td>-->
-<!--                <td>{{horarios}}</td>-->
-<!--                <td>{{statusPermuta status}}</td>-->
-<!--            </tr>-->
         {{/each}}
 
 </div>

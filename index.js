@@ -32,7 +32,7 @@ servidor.use(flash());
 servidor.use(function (req, res, next) {
     res.locals.success_msg = req.flash('success_msg')
     res.locals.error_msg = req.flash('error_msg')
-    res.locals.error = req.flash('error')
+    //res.locals.error = req.flash('error')
     res.locals.usuario = req.user || null
     next()
 });
@@ -58,9 +58,11 @@ servidor.engine('handlebars', handlebars.engine({
         },
         categoriaUsuario: function (categoria){
             switch (categoria) {
-                case 0: return "Docente";
-                case 1: return "Coordenador";
-                case 2: return "Supremo";
+                case 0: return "Discente";
+                case 1: return "Docente";
+                case 2: return "Coordenador";
+                case 3: return "Departamento Ensino";
+                case 4: return "Supremo";
             }
         },
         defineHorario: function (horario){
@@ -77,11 +79,18 @@ servidor.engine('handlebars', handlebars.engine({
         },
         statusPermuta:function(status){
             switch (status) {
-                case 0: return "Permutado";
-                case 1: return "Devolvido";
+                case 0: return "Pendente";
+                case 1: return "Aberto";
+                case 2: return "Finalizado"
             }
-        }
-        ,
+        },
+        corPermuta: function(status){
+            switch (status) {
+                case 0: return "#DCDCDC";
+                case 1: return "#FFC0CB";
+                case 2: return "#90EE90"
+            }
+        },
         igual:function (a,b){
             return a === b
         }
@@ -114,5 +123,8 @@ servidor.use('/permuta', permuta);
 
 import usuario from './routes/usuario.js'
 servidor.use('/usuario', usuario);
+
+import professor from './routes/professor.js'
+servidor.use('/professor', professor)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))
