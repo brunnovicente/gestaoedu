@@ -7,4 +7,7 @@ router.post('/login', usuarioController.login);
 router.get('/logout', usuarioController.logout);
 router.get('/senha/:senha', usuarioController.senha);
 router.get('/codigo', (req, res)=> res.render('usuario/codigo', {layout: 'secundario'}));
+router.post('/codigo', usuarioController.codigo);
+router.get('/esqueceu', (req, res)=> res.render('usuario/esqueceu', {layout: 'secundario'}));
+router.post('/esqueceu', usuarioController.esqueceu);
 export default router;

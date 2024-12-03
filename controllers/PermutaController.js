@@ -158,7 +158,7 @@ export default {
                 id: req.params.id
             }
         }).then(function () {
-            req.flash('success_msg', 'Permuta aberta com sucesso!')
+            req.flash('success_msg', 'Permuta fechada com sucesso!')
             res.redirect('/permuta')
         })
     },
@@ -236,6 +236,9 @@ export default {
                         as: 'professor'
                     }
                 }
+            ],
+            order:[
+                ['data', 'DESC']
             ]
         }).then(function(permutas){
             res.render('permuta/index', {permutas: permutas})
@@ -286,6 +289,11 @@ export default {
                 siape: req.body.busca
             }
         }).then((professor) => {
+            if(!professor){
+                console.log('Professor não encontrado')
+                req.flash('error_msg', 'SIAPE não encontrado!')
+                res.redirect('/permuta/listar')
+            }
             Diario.findAll({
                  where: {professor_id: professor.id},
                  include:{

@@ -11,17 +11,17 @@
         <div class="col-sm">
             <form method="post" action="/permuta/listar">
                 <label>DIGITE O SEU SIAPE AQUI E PRESSIONE ENTER</label>
-                <input class="form-control my-2 w-25" name="busca">
+                <input class="form-control my-2 w-25" name="busca" required>
             </form>
         </div>
     </div>
 
     {{#if diarios}}
 
-    <div class="bg-light my-3 py-2 px-1 d-flex justify-content-between">
-        <h5>Prof. {{professor.nome}}</h5>
-        <a href="/permuta/minhas/{{professor.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-handshake"></i> Permutas</a>
-    </div>
+<!--    <div class="bg-light my-3 py-2 px-1 d-flex justify-content-between">-->
+<!--        <h5>Prof. {{professor.nome}}</h5>-->
+<!--        <a href="/permuta/minhas/{{professor.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-handshake"></i> Permutas</a>-->
+<!--    </div>-->
     <table class="table table-striped">
         <tr>
             <th>CURSO</th>

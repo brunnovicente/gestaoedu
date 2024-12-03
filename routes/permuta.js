@@ -11,5 +11,6 @@ router.get('/listar', (req, res) => res.render('permuta/listar', {layout: 'secun
 router.post('/listar', PermutaController.listar)
 router.get('/minhas/:id', PermutaController.minhas)
 router.get('/abrir/:id', coordenador, PermutaController.abrir)
+router.get('/fechar/:id', coordenador, PermutaController.fechar)
 
 export default router;

@@ -9,6 +9,8 @@ function enviarCodigo(usuario){
 
     }
     tranporter.sendMail(config).then(function (mail){
-        console.log('Email enviado ao professor substituto')
+        console.log('Código enviado para o E-mail')
     })
 }
+
+export default {enviarCodigo}

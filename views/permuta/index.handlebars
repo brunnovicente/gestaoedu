@@ -1,8 +1,10 @@
 <nav class="navbar bg-body-tertiary container-sm mb-2">
     <div class="container-fluid">
-        <h4 href="#">Permutas</h4>
+        <h4>Permutas</h4>
+        <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
     </div>
 </nav>
+
 <div class="container-sm">
     <div class="d-flex justify-content-center w-25 mx-auto">
         <div class="me-3">FILTRO: </div>
@@ -18,13 +20,14 @@
         <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
 
             <ul class="nav justify-content-end mb-3">
-                <li class="nav-item">
-                    <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
-                </li>
+
 
                 {{#if (igual status 1)}}
                     <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-dark me-2" href="#"><i class="fa-solid fa-lock"></i> Fechar</a>
+                        <a class="btn btn-sm btn-outline-dark me-2" href="/permuta/fechar/{{id}}"><i class="fa-solid fa-lock"></i> Fechar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
                     </li>
                 {{/if}}
                 {{#if (igual status 0)}}
@@ -33,6 +36,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-sm btn-outline-dark me-2" href="#"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
                     </li>
                 {{/if}}
 
@@ -76,6 +82,7 @@
                 </div>
                 <!--COLUNA DO PROFESSOR-->
             </div>
+            <strong>JUSTIFICATIVA: </strong> {{justificativa}}
         </div>
     {{/each}}
 
