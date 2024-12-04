@@ -17,7 +17,7 @@ export default {
     logout: function(req, res, next) {
         req.logout(function (erro){
             req.flash('success_msg', 'Usuário deslogado com sucesso.')
-            res.redirect('/principal')
+            res.redirect('/permuta/listar')
         })
     },
 
