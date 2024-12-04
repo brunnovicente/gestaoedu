@@ -22,17 +22,16 @@ const PORTA = 3000
 servidor.use(session({
     secret: "iambatman",
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
 }))
 servidor.use(passport.initialize())
 servidor.use(passport.session())
-
 servidor.use(flash());
 
 servidor.use(function (req, res, next) {
     res.locals.success_msg = req.flash('success_msg')
     res.locals.error_msg = req.flash('error_msg')
-    //res.locals.error = req.flash('error')
+    res.locals.error = req.flash('error')
     res.locals.usuario = req.user || null
     next()
 });

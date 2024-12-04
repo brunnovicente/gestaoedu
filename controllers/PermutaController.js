@@ -108,7 +108,7 @@ function enviarEmailCoordenador(permuta){
                     </tr>
                     <tr style="border: 1px solid #ddd;">
                         <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIÁRIO SUBSTITUTO</td>
-                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
+c                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
                     </tr>
                     <tr style="border: 1px solid #ddd;">
                         <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">PROFESSOR SUBSTITUTO</td>
@@ -171,18 +171,10 @@ export default {
             status: 0,
             diario_id: req.body.id_diario,
             dia: definirDia(req.body.data),
-            substituto_id: req.body.substituto || null,
+            substituto_id: req.body.substituto_id == 0 ? null : req.body.substituto_id,
         }
         Permuta.create(permuta).then(async function (permuta) {
-            if(permuta.substituto_id) {
-                var substituto = await Diario.findByPk(permuta.substituto_id, {
-                    include: {
-                        model: Professor,
-                        as: 'professor'
-                    }
-                })
-                permuta.substituto = substituto
-            }
+
             var diario = await Diario.findByPk(permuta.diario_id, {
                 include:[{
                     model: Turma,
@@ -199,6 +191,17 @@ export default {
                 }]
             })
             permuta.diario = diario
+            if(permuta.substituto_id > 0) {
+                var substituto = await Diario.findByPk(permuta.substituto_id, {
+                    include: {
+                        model: Professor,
+                        as: 'professor'
+                    }
+                })
+                permuta.substituto = substituto
+            }else{
+                permuta.substituto = diario
+            }
 
             if(permuta.substituto_id)
                 await enviarEmailSubstituto(permuta)
@@ -278,7 +281,7 @@ export default {
                 }
             }).then(function (substitutos){
 
-                res.render('permuta/cadastrar', {diario: diario, substitutos: substitutos});
+                res.render('permuta/cadastrar', {diario: diario, substitutos: substitutos, layout: 'secundario'});
             })
         })
 
@@ -293,18 +296,19 @@ export default {
                 console.log('Professor não encontrado')
                 req.flash('error_msg', 'SIAPE não encontrado!')
                 res.redirect('/permuta/listar')
+            }else{
+                Diario.findAll({
+                    where: {professor_id: professor.id},
+                    include:{
+                        model: Turma,
+                        include: {
+                            model: Curso,
+                        }
+                    }
+                }).then((diarios) => {
+                    res.render('permuta/listar', {layout: 'secundario', professor: professor, diarios: diarios});
+                })
             }
-            Diario.findAll({
-                 where: {professor_id: professor.id},
-                 include:{
-                     model: Turma,
-                     include: {
-                         model: Curso,
-                     }
-                 }
-             }).then((diarios) => {
-                 res.render('permuta/listar', {layout: 'secundario', professor: professor, diarios: diarios});
-             })
         })
     },
     minhas: function (req, res){
