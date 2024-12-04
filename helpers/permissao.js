@@ -1,5 +1,34 @@
 import Professor from "../models/Professor.js";
 
+function getCategoria(c){
+    switch(c){
+        case 0:
+            return 'Discente'
+        case 1:
+            return 'Docente'
+        case 2:
+            return 'Coordenador'
+        case 3:
+            return 'DE'
+        case 4:
+            return "Supremo"
+    }
+}
+
+function autorizar(categorias){
+    return function (req, res, next){
+        if(!req.isAuthenticated()){
+            req.flash('success_msg', 'Você precisa realizar o login!')
+            res.redirect('/usuario/login')
+        }
+
+        if(!categorias.includes(getCategoria(req.user.categoria))){
+            req.flash('error_msg', 'Você não tem permissão para acessar esse conteúdo.')
+            res.redirect('/principal')
+        }
+    }
+}
+
 const discente = function (req, res, next){
     //Categoria 0
 }
@@ -10,10 +39,6 @@ const docente = function (req, res, next){
 
 const coordenador = function(req, res, next) {
     if(req.isAuthenticated() && req.user.categoria === 2) {
-        // Professor.findByPk(req.user.professor_id).then(function (professor) {
-        //      req.user.professor = professor;
-        //      //return next()
-        // })
         return next()
     }
     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
@@ -22,10 +47,6 @@ const coordenador = function(req, res, next) {
 
 const de = function (req, res, next){
     if(req.isAuthenticated() && req.user.categoria === 3) {
-        // Professor.findByPk(req.user.professor_id).then(function (professor) {
-        //     req.user.professor = professor;
-        //     //return next()
-        // })
         return next()
     }
     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
@@ -34,20 +55,12 @@ const de = function (req, res, next){
 
 const supremo = function (req, res, next){
     if(req.isAuthenticated() && req.user.categoria === 4) {
-        // Professor.findByPk(req.user.professor_id).then(function (professor) {
-        //     req.user.professor = professor;
-        //     //return next()
-        // })
         return next()
     }
 }
 
 const isLogado = function(req, res, next) {
     if(req.isAuthenticated()) {
-        // Professor.findByPk(req.user.professor_id).then(function (professor) {
-        //      req.user.eleitor = professor;
-        // //     return next()
-        //  })
         return next()
     }
     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')

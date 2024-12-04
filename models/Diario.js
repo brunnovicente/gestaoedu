@@ -17,7 +17,7 @@ const Diario = banco.sequelize.define('diarios', {
         allowNull: false
     },
     horario:{
-       type: banco.Sequelize.STRING(20),
+       type: banco.Sequelize.STRING(100),
     },
     status:{
         type: banco.Sequelize.INTEGER,

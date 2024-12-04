@@ -10,4 +10,7 @@ router.get('/codigo', (req, res)=> res.render('usuario/codigo', {layout: 'secund
 router.post('/codigo', usuarioController.codigo);
 router.get('/esqueceu', (req, res)=> res.render('usuario/esqueceu', {layout: 'secundario'}));
 router.post('/esqueceu', usuarioController.esqueceu);
+router.get('/alterarsenha', (req, res)=> res.render('usuario/alterarsenha'));
+router.post('/alterarsenha', usuarioController.alterarsenha)
+
 export default router;

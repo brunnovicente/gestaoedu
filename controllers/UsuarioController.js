@@ -1,12 +1,9 @@
-import express from "express";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import Usuario from "../models/Usuario.js";
 import Professor from "../models/Professor.js";
 import auxiliar from "../helpers/auxiliar.js"
 import comunicador from "../helpers/comunicador.js"
-
-const router = express.Router();
 
 export default {
 
@@ -20,7 +17,7 @@ export default {
     logout: function(req, res, next) {
         req.logout(function (erro){
             req.flash('success_msg', 'Usuário deslogado com sucesso.')
-            res.redirect('/usuario/login')
+            res.redirect('/principal')
         })
     },
 
@@ -124,6 +121,29 @@ export default {
             req.flash('error_msg', 'Código Inválido')
             res.redirect('/usuario/esqueceu')
         })
+    },
+    alterarsenha: function (req, res){
+        let senha1 = req.body.senha1
+        let senha2 = req.body.senha2
+        if(senha1 === senha2){
+            bcrypt.genSalt(10, function (erro, salt) {
+                bcrypt.hash(senha1, salt, function (erro, hash) {
+                    Usuario.update({
+                        password: hash
+                    }, {
+                        where:{
+                            id: req.user.id
+                        }
+                    }).then(function (){
+                        req.flash('success_msg', 'Senha alterada com sucesso!')
+                        res.redirect('/principal')
+                    })
+                })
+            })
+        }else{
+            req.flash('error_msg', 'Repita a mesma senha')
+            res.redirect('/usuario/alterarsenha')
+        }
     }
 
 }//Fim do Módulo
