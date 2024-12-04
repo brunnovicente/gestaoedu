@@ -34,23 +34,11 @@ export default {
     },
 
     promover: function(req, res){
-        const usuario = Usuario.findByPk(req.params.id);
-
-        if(usuario.categoria === 1){
-            usuario.categoria = 2
-        }else if(usuario.categoria === 2){
-            usuario.categoria = 3
-        }
-
-        Usuario.update(usuario, {
-            where: {
-                id: usuario.id
-            }
-        }).then(function () {
-            res.flash('success_msg', 'Professor promovido com sucesso!')
-            req.redirect('/professor')
+        Usuario.findByPk(req.params.id).then(function(usuario){
+            res.redirect('/principal')
         })
     },//fim do promover
+
     codigo: function(req,res){
         const siape = req.body.siape
         Usuario.findOne({

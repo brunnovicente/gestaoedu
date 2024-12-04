@@ -1,4 +1,4 @@
-import Professor from "../models/Professor.js";
+import Usuario from '../models/Usuario.js'
 
 function getCategoria(c){
     switch(c){
@@ -11,7 +11,7 @@ function getCategoria(c){
         case 3:
             return 'DE'
         case 4:
-            return "Supremo"
+            return 'Supremo'
     }
 }
 
@@ -19,52 +19,63 @@ function autorizar(categorias){
     return function (req, res, next){
         if(!req.isAuthenticated()){
             req.flash('success_msg', 'Você precisa realizar o login!')
-            res.redirect('/usuario/login')
+            return res.redirect('/usuario/login')
         }
-
-        if(!categorias.includes(getCategoria(req.user.categoria))){
+        let cat = getCategoria(req.user.categoria)
+        if(!categorias.includes(cat)){
             req.flash('error_msg', 'Você não tem permissão para acessar esse conteúdo.')
-            res.redirect('/principal')
+            return res.redirect('/principal')
         }
-    }
-}
-
-const discente = function (req, res, next){
-    //Categoria 0
-}
-
-const docente = function (req, res, next){
-    //Categoria 1
-}
-
-const coordenador = function(req, res, next) {
-    if(req.isAuthenticated() && req.user.categoria === 2) {
-        return next()
-    }
-    req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
-    res.redirect('/principal')
-}
-
-const de = function (req, res, next){
-    if(req.isAuthenticated() && req.user.categoria === 3) {
-        return next()
-    }
-    req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
-    res.redirect('/principal')
-}
-
-const supremo = function (req, res, next){
-    if(req.isAuthenticated() && req.user.categoria === 4) {
         return next()
     }
 }
 
-const isLogado = function(req, res, next) {
-    if(req.isAuthenticated()) {
+function isLogado(req, res, next){
+    if(req.isAuthenticated()){
         return next()
     }
-    req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
+    req.flash('error_msg', 'Você precisa realizar o login!.')
     res.redirect('/usuario/login')
 }
 
-export {coordenador, de, supremo, isLogado}
+export {autorizar, isLogado}
+
+// const discente = function (req, res, next){
+//     //Categoria 0
+// }
+//
+// const docente = function (req, res, next){
+//     //Categoria 1
+// }
+//
+// const coordenador = function(req, res, next) {
+//     if(req.isAuthenticated() && req.user.categoria === 2) {
+//         return next()
+//     }
+//     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
+//     res.redirect('/principal')
+// }
+//
+// const de = function (req, res, next){
+//     if(req.isAuthenticated() && req.user.categoria === 3) {
+//         return next()
+//     }
+//     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
+//     res.redirect('/principal')
+// }
+//
+// const supremo = function (req, res, next){
+//     if(req.isAuthenticated() && req.user.categoria === 4) {
+//         return next()
+//     }
+// }
+//
+// const isLogado = function(req, res, next) {
+//     if(req.isAuthenticated()) {
+//         return next()
+//     }
+//     req.flash('error_msg', 'Você não tem autorização para acessar esse conteúdo')
+//     res.redirect('/usuario/login')
+// }
+//
+// export {coordenador, de, supremo, isLogado}
