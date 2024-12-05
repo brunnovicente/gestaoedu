@@ -16,7 +16,7 @@
         </select>
     </div>
     {{#each permutas}}
-
+        {{#if (igual diario.turma.curso.professor_id ../usuario.professor.id)}}
         <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
 
             <ul class="nav justify-content-end mb-3">
@@ -84,6 +84,7 @@
             </div>
             <strong>JUSTIFICATIVA: </strong> {{justificativa}}
         </div>
+        {{/if}}
     {{/each}}
 
 </div>
