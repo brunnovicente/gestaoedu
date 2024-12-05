@@ -227,7 +227,7 @@ export default {
                         },
                         {
                             model: Turma,
-                            include: Curso
+                            include: Curso,
                         }
                     ]
                 },
