@@ -20,8 +20,6 @@
         <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
 
             <ul class="nav justify-content-end mb-3">
-
-
                 {{#if (igual status 1)}}
                     <li class="nav-item">
                         <a class="btn btn-sm btn-outline-dark me-2" href="/permuta/fechar/{{id}}"><i class="fa-solid fa-lock"></i> Fechar</a>
@@ -35,7 +33,7 @@
                         <a class="btn btn-sm btn-outline-dark me-2" href="/permuta/abrir/{{id}}"><i class="fa-solid fa-lock-open"></i> Abrir</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-dark me-2" href="#"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                        <button class="btn btn-sm btn-outline-dark me-2" onclick="excluir({{id}})"><i class="fa-solid fa-trash-can"></i> Excluir</button>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
@@ -93,5 +91,10 @@
     function filtrar(){
         var select = document.getElementById('status')
         alert(select.value)
+    }
+    function excluir(id){
+        if(confirm('Deseja realmente excluir a Permuta?')){
+            document.location.href = '/permuta/delete/'+id
+        }
     }
 </script>

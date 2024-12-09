@@ -35,12 +35,28 @@
                     <input type="date" id="data" name="data" class="form-control">
 
                 </div>
-                <div class="col-3 ms-5">
-                    <label class="d-block">HORARIOS</label>
-                    <select id="horarios" name="horarios" class="form-select">
-                    {{#each (defineHorario diario.horario)}}
-                        <option value="{{this}}">{{this}}</option>
-                    {{/each}}
+                <div class="col-5">
+                    <label class="d-block mb-2">HORARIOS</label>
+<!--                    <select id="horarios" name="horarios" class="form-select" onchange="verHorarios()">-->
+<!--                    {{#each (defineHorario diario.horario)}}-->
+<!--                        <option value="{{this}}">{{this}}</option>-->
+<!--                    {{/each}}-->
+
+<!--                    </select>-->
+
+                    <span class="me-1"><input type="checkbox" name="primeiro" value="1"> 1º</span>
+                    <span class="me-1"><input type="checkbox" name="segundo" value="2"> 2º</span>
+                    <span class="me-1"><input type="checkbox" name="terceiro" value="3"> 3º</span>
+                    <span class="me-1"><input type="checkbox" name="quarto" value="4"> 4º</span>
+                    <span class="me-1"><input type="checkbox" name="quinto" value="5"> 4º</span>
+                    <span class="me-1"><input type="checkbox" name="sexto" value="6"> 6º</span>
+                </div>
+                <div class="col-4">
+                    <label>TURNO</label>
+                    <select class="form-select" name="turno">
+                        <option value="M">Matutino</option>
+                        <option value="V">Vespertino</option>
+                        <option value="N">Noturno</option>
                     </select>
                 </div>
                 <label for="exampleTextarea" class="form-label mt-3">JUSTIFICATIVA</label>
@@ -68,8 +84,17 @@
     const today = new Date();
 
     // Formatar a data no padrão YYYY-MM-DD
-    const formattedDate = today.toISOString().split('T')[0];
+    //const formattedDate = today.toISOString().split('T')[0];
+
+    // Extrair os componentes da data no fuso horário local
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Mês é zero-based
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
 
     // Atribuir a data formatada ao input
     document.getElementById('data').value = formattedDate;
+
 </script>
+

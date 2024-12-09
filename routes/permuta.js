@@ -12,5 +12,6 @@ router.post('/listar', PermutaController.listar)
 router.get('/minhas/:id', PermutaController.minhas)
 router.get('/abrir/:id', autorizar(['Coordenador']), PermutaController.abrir)
 router.get('/fechar/:id', autorizar(['Coordenador']), PermutaController.fechar)
+router.get('/delete/:id', autorizar(['Coordenador']), PermutaController.delete)
 
 export default router;
