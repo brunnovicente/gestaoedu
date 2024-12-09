@@ -8,12 +8,10 @@ import auxiliar from "../helpers/auxiliar.js"
 import Usuario from "../models/Usuario.js";
 import permuta from "../models/Permuta.js";
 
-
-
 function definirDia(data){
     const daysOfWeek = [
-        'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
-        'Quinta-feira', 'Sexta-feira', 'Sábado'
+        'Segunda-feira', 'Terça-feira', 'Quarta-feira',
+        'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'
     ];
 
     // Converte a string em um objeto Date
@@ -21,11 +19,31 @@ function definirDia(data){
 
     // Verifica se a data é válida
     if (isNaN(date)) {
-        return 'Data inválida';
+        return  'Data inválida';
+    }
+    console.log('numero data: '+date.getDay())
+    console.log('DIA: '+daysOfWeek[date.getDay()])
+
+    // Retorna o dia correspondente
+    return daysOfWeek[date.getDay()];
+}
+
+function definirNumeroDia(data){
+    const daysOfWeek = [
+        '2', '3', '4',
+        '5', '6', '7', '8'
+    ];
+
+    // Converte a string em um objeto Date
+    const date = new Date(data);
+
+    // Verifica se a data é válida
+    if (isNaN(date)) {
+        return  'Data inválida';
     }
 
     // Retorna o dia correspondente
-    return daysOfWeek[date.getDay()+1];
+    return daysOfWeek[date.getDay()];
 }
 
 function formatarData(data){
@@ -108,7 +126,7 @@ function enviarEmailCoordenador(permuta){
                     </tr>
                     <tr style="border: 1px solid #ddd;">
                         <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">DIÁRIO SUBSTITUTO</td>
-c                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${permuta.substituto.descricao}</td>
                     </tr>
                     <tr style="border: 1px solid #ddd;">
                         <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">PROFESSOR SUBSTITUTO</td>
@@ -135,6 +153,23 @@ c                        <td style="border: 1px solid #ddd; padding: 8px;">${per
     tranporter.sendMail(config).then(function (mail){
         console.log('Email enviado ao coordenador')
     })
+}
+
+function gerarHorario(req){
+    var horarios = definirNumeroDia(req.body.data) + req.body.turno+''
+    if(req.body.primeiro)
+        horarios += req.body.primeiro
+    if(req.body.segundo)
+        horarios += req.body.segundo
+    if(req.body.terceiro)
+        horarios += req.body.terceiro
+    if(req.body.quarto)
+        horarios += req.body.quarto
+    if(req.body.quinto)
+        horarios += req.body.quinto
+    if(req.body.sexto)
+        horarios += req.body.sexto
+    return horarios
 }
 
 export default {
@@ -164,14 +199,16 @@ export default {
     },
 
     salvar: function (req, res){
+        var horarios = gerarHorario(req)
+
         const permuta = {
             data: req.body.data,
-            horarios: req.body.horarios,
+            horarios: horarios,
             justificativa: req.body.justificativa,
             status: 0,
             diario_id: req.body.id_diario,
             dia: definirDia(req.body.data),
-            substituto_id: req.body.substituto_id == 0 ? null : req.body.substituto_id,
+            substituto_id: req.body.substituto === '0' ? null : req.body.substituto,
         }
         Permuta.create(permuta).then(async function (permuta) {
 
@@ -350,5 +387,16 @@ export default {
 
             })
         })
-    }
+    },
+    delete:function (req, res){
+        var id = req.params.id
+        Permuta.destroy({
+            where:{
+                id: id
+            }
+        }).then(function (){
+            req.flash('success_msg', 'Permuta removida com sucesso!')
+            res.redirect('/permuta')
+        })
+    },
 }//Fim do Controller
