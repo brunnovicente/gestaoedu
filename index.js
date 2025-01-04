@@ -92,6 +92,9 @@ servidor.engine('handlebars', handlebars.engine({
         },
         igual:function (a,b){
             return a === b
+        },
+        diferente:function (a,b){
+            return a !== b
         }
     }
 }));
@@ -125,5 +128,8 @@ servidor.use('/usuario', usuario);
 
 import professor from './routes/professor.js'
 servidor.use('/professor', professor)
+
+import diario from './routes/diario.js'
+servidor.use('/diario', diario)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))

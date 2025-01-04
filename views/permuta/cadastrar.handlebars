@@ -48,7 +48,7 @@
                     <span class="me-1"><input type="checkbox" name="segundo" value="2"> 2º</span>
                     <span class="me-1"><input type="checkbox" name="terceiro" value="3"> 3º</span>
                     <span class="me-1"><input type="checkbox" name="quarto" value="4"> 4º</span>
-                    <span class="me-1"><input type="checkbox" name="quinto" value="5"> 4º</span>
+                    <span class="me-1"><input type="checkbox" name="quinto" value="5"> 5º</span>
                     <span class="me-1"><input type="checkbox" name="sexto" value="6"> 6º</span>
                 </div>
                 <div class="col-4">
@@ -67,7 +67,9 @@
             <select id="substituto" name="substituto" class="form-select">
                 <option value="0">Sem substituto - Apenas Solicitar Liberação</option> <!-- Opção em branco -->
                 {{#each substitutos}}
-                    <option value="{{id}}"><strong>{{descricao}}</strong> - {{professor.nome}}</option>
+                    {{#if (diferente ../diario.professor.id professor.id)}}
+                        <option value="{{id}}"><strong>{{descricao}}</strong> - {{professor.nome}}</option>
+                    {{/if}}
                 {{/each}}
             </select>
 

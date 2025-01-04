@@ -208,7 +208,7 @@ export default {
             status: 0,
             diario_id: req.body.id_diario,
             dia: definirDia(req.body.data),
-            substituto_id: req.body.substituto === '0' ? null : req.body.substituto,
+            substituto_id: req.body.substituto === '0' ? req.body.id_diario : req.body.substituto,
         }
         Permuta.create(permuta).then(async function (permuta) {
 
