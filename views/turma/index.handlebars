@@ -1,11 +1,11 @@
 <div class="container-sm">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <h4>Diários</h4>
+            <h4>Turmas</h4>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="/diario/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
+                        <a href="/turma/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
@@ -17,25 +17,21 @@
 
     <table class="table table-striped">
         <tr>
+            <th>CODIGO</th>
             <th>DESCRIÇÃO</th>
-            <th>HORARIO</th>
-            <th>PROFESSOR</th>
+            <th>SEMESTRE</th>
             <th>CURSO</th>
-            <th>TURMA</th>
-            <th>ANO</th>
             <th></th>
         </tr>
 
-        {{#each diarios}}
+        {{#each turmas}}
             <tr>
+                <td>{{codigo}}</td>
                 <td>{{descricao}}</td>
-                <td>{{horario}}</td>
-                <td>{{professor.nome}}</td>
-                <td>{{turma.curso.descricao}}</td>
-                <td>{{turma.descricao}}</td>
-                <td>{{turma.ano}}</td>
+                <td>{{ano}}.{{semestre}}</td>
+                <td>{{curso.descricao}}</td>
                 <td>
-                    <a class="btn btn-sm btn-outline-primary" href="/diario/editar/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                    <a class="btn btn-sm btn-outline-primary" href="/turma/editar/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
                 </td>
             </tr>
         {{/each}}
