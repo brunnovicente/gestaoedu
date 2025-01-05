@@ -132,4 +132,10 @@ servidor.use('/professor', professor)
 import diario from './routes/diario.js'
 servidor.use('/diario', diario)
 
+import turma from './routes/turma.js'
+servidor.use('/turma', turma)
+
+import curso from './routes/curso.js'
+servidor.use('/curso', curso)
+
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))
