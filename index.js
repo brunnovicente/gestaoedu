@@ -44,6 +44,8 @@ servidor.engine('handlebars', handlebars.engine({
         json: function(context) {
             return JSON.stringify(context, null, 2);
         },
+        eq: (a, b) => a === b, // Compara dois valores
+        or: (a, b) => a || b,
         formatDate: function (date) {
             const d =  new Date(date)
             const day = String(d.getDate()).padStart(2, '0')
@@ -137,5 +139,8 @@ servidor.use('/turma', turma)
 
 import curso from './routes/curso.js'
 servidor.use('/curso', curso)
+
+import calendario from './routes/calendario.js'
+servidor.use('/calendario', calendario)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))

@@ -22,6 +22,12 @@ const Diario = banco.sequelize.define('diarios', {
     status:{
         type: banco.Sequelize.INTEGER,
         allowNull: false
+    },
+    total:{
+        type: banco.Sequelize.INTEGER,
+    },
+    ministrada:{
+        type: banco.Sequelize.INTEGER,
     }
 })
 

@@ -1,5 +1,6 @@
 import banco from './banco.js'
 import Curso from "./Curso.js";
+import Calendario from "./Calendario.js";
 
 const Turma = banco.sequelize.define('turmas', {
     id:{
@@ -33,6 +34,11 @@ Turma.belongsTo(Curso, {
     foreignKey: 'curso_id',
     constraint: true,
     onDelete: 'CASCADE',
+})
+
+Turma.belongsTo(Calendario, {
+    foreignKey: 'calendario_id',
+    constraint: true,
 })
 
 export default Turma

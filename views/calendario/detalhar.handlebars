@@ -1,0 +1,36 @@
+<style>
+    .dia {
+        width: 14.28%; /* 7 colunas (semana) */
+        height: 100px;
+        border: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        font-size: 14px;
+        background-color: #f8f9fa;
+    }
+    .dia.fim-de-semana {
+        background-color: #f2dede; /* Cor diferente para sábado e domingo */
+    }
+    /*.row {*/
+    /*    display: flex;*/
+    /*    flex-wrap: wrap;*/
+    /*}*/
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Calendário</h2>
+    {{#each dias}}
+    <div class="row">
+            <div class="col-sm">
+                {{data}}
+            </div>
+            <div class="col">
+                {{tipo}}
+            </div>
+    </div>
+    {{/each}}
+
+</div>
