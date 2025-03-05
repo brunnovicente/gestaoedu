@@ -45,6 +45,8 @@ async function salvar(req, res){
         descricao: req.body.descricao,
         horario: req.body.horario,
         status: 1,
+        total: req.body.total,
+        ministrada: 0,
         professor_id: req.body.professor_id,
         turma_id: req.body.turma_id,
     }

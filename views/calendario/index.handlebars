@@ -1,0 +1,77 @@
+<div class="container-sm">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <h4>Calendário Acadêmico</h4>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item ms-2">
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-plus"></i> Dia
+                        </button>
+                        <a href="/calendario/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
+                        <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="w-50 mx-auto">
+        <table class="table table-hover">
+            <tr>
+                <th>DATA</th>
+                <th>DIA</th>
+                <th></th>
+            </tr>
+            {{#each dias}}
+                <tr>
+                    <td>{{formatDate data}}</td>
+                    <td>{{diaSemana dia}}</td>
+                    <td>
+                        <button class="btn btn-outline-danger btn-sm" onclick="excluirDia({{id}})">Excluir</button>
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+    </div>
+
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar Dia Letivo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dia/salvar">
+            <div class="modal-body">
+
+
+                    <input name="calendario_id" value="{{calendario.id}}" hidden="hidden">
+
+                    <label for="">DATA</label>
+                    <input type="date" class="form-control w-50" name="data">
+
+                    <label>DIA</label>
+                    <select name="dia" class="form-select">
+                        <option value="0">Segunda</option>
+                        <option value="1">Terça</option>
+                        <option value="2">Quarta</option>
+                        <option value="3">Quinta</option>
+                        <option value="4">Sexta</option>
+                        <option value="5">Sábado</option>
+                      </select>
+
+
+            </div>
+            <div class="modal-footer">
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

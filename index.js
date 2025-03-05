@@ -48,6 +48,7 @@ servidor.engine('handlebars', handlebars.engine({
         or: (a, b) => a || b,
         formatDate: function (date) {
             const d =  new Date(date)
+            d.setDate(d.getDate() + 1)
             const day = String(d.getDate()).padStart(2, '0')
             const month = String(d.getMonth() + 1).padStart(2, '0') // Mês começa do 0
             const year = d.getFullYear()
@@ -70,13 +71,13 @@ servidor.engine('handlebars', handlebars.engine({
             var horarios = horario.split(' / ')
             return horarios
         },
-        diaSemana: function(dateString) {
+        diaSemana: function(dia) {
             const days = [
-                'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+                'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado','Domingo',
             ];
-            const date = new Date(dateString);
-            if (isNaN(date)) return 'Invalid date'; // Validação básica
-            return days[date.getDay()];
+            // const date = new Date(dateString);
+            // if (isNaN(date)) return 'Invalid date'; // Validação básica
+            return days[dia];
         },
         statusPermuta:function(status){
             switch (status) {
@@ -142,5 +143,8 @@ servidor.use('/curso', curso)
 
 import calendario from './routes/calendario.js'
 servidor.use('/calendario', calendario)
+
+import dia from './routes/dia.js'
+servidor.use('/dia', dia)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))

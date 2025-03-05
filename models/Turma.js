@@ -36,9 +36,4 @@ Turma.belongsTo(Curso, {
     onDelete: 'CASCADE',
 })
 
-Turma.belongsTo(Calendario, {
-    foreignKey: 'calendario_id',
-    constraint: true,
-})
-
 export default Turma

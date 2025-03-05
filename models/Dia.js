@@ -7,17 +7,14 @@ const Dia = banco.sequelize.define("dias", {
         primaryKey: true,
         autoIncrement: true
     },
+    dia:{
+        type: banco.Sequelize.INTEGER,
+    },
     data:{
         type: banco.Sequelize.DATEONLY,
     },
-    tipo:{
+    sabado:{
         type: banco.Sequelize.INTEGER,
-    },
-    obs:{
-        type: banco.Sequelize.STRING('250'),
-    },
-    dia:{
-        type: banco.Sequelize.STRING('20'),
     }
 })
 

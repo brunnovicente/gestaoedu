@@ -6,6 +6,7 @@ import Diario from "./Diario.js";
 import Permuta from "./Permuta.js";
 import Calendario from "./Calendario.js";
 import Dia from "./Dia.js";
+import Horario from "./Horario.js";
 
 await Professor.sync()
 await Usuario.sync()
@@ -15,3 +16,4 @@ await Turma.sync()
 await Diario.sync()
 await Permuta.sync()
 await Dia.sync()
+await Horario.sync()
