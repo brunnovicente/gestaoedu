@@ -16,12 +16,27 @@
 
 
 -- Copiando estrutura do banco de dados para gestaoedu
-DROP DATABASE IF EXISTS `gestaoedu`;
 CREATE DATABASE IF NOT EXISTS `gestaoedu` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `gestaoedu`;
 
+-- Copiando estrutura para tabela gestaoedu.calendarios
+CREATE TABLE IF NOT EXISTS `calendarios` (
+                                             `id` int(11) NOT NULL AUTO_INCREMENT,
+                                             `ano` int(11) DEFAULT NULL,
+                                             `semestre` int(11) DEFAULT NULL,
+                                             `status` int(11) DEFAULT NULL,
+                                             `inicio` date DEFAULT NULL,
+                                             `fim` date DEFAULT NULL,
+                                             `createdAt` datetime NOT NULL,
+                                             `updatedAt` datetime NOT NULL,
+                                             PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela gestaoedu.calendarios: ~0 rows (aproximadamente)
+INSERT INTO `calendarios` (`id`, `ano`, `semestre`, `status`, `inicio`, `fim`, `createdAt`, `updatedAt`) VALUES
+    (1, 2025, 1, 1, '2025-03-17', '2025-07-25', '2025-03-04 13:48:44', '2025-03-04 13:48:44');
+
 -- Copiando estrutura para tabela gestaoedu.cursos
-DROP TABLE IF EXISTS `cursos`;
 CREATE TABLE IF NOT EXISTS `cursos` (
                                         `id` int(11) NOT NULL AUTO_INCREMENT,
                                         `descricao` varchar(100) NOT NULL,
@@ -40,13 +55,14 @@ INSERT INTO `cursos` (`id`, `descricao`, `status`, `createdAt`, `updatedAt`, `pr
                                                                                                  (2, 'Técnico em Desenvolvimento de Sistemas', 1, '2024-11-23 21:34:30', '2024-11-23 21:34:30', 35);
 
 -- Copiando estrutura para tabela gestaoedu.diarios
-DROP TABLE IF EXISTS `diarios`;
 CREATE TABLE IF NOT EXISTS `diarios` (
                                          `id` int(11) NOT NULL AUTO_INCREMENT,
                                          `codigo` int(11) NOT NULL,
                                          `descricao` varchar(100) NOT NULL,
-                                         `horario` varchar(20) DEFAULT NULL,
+                                         `horario` varchar(100) DEFAULT NULL,
                                          `status` int(11) NOT NULL,
+                                         `total` int(11) DEFAULT NULL,
+                                         `ministrada` int(11) DEFAULT NULL,
                                          `createdAt` datetime NOT NULL,
                                          `updatedAt` datetime NOT NULL,
                                          `professor_id` int(11) DEFAULT NULL,
@@ -56,28 +72,151 @@ CREATE TABLE IF NOT EXISTS `diarios` (
                                          KEY `turma_id` (`turma_id`),
                                          CONSTRAINT `diarios_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `professores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                                          CONSTRAINT `diarios_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turmas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela gestaoedu.diarios: ~12 rows (aproximadamente)
-INSERT INTO `diarios` (`id`, `codigo`, `descricao`, `horario`, `status`, `createdAt`, `updatedAt`, `professor_id`, `turma_id`) VALUES
-                                                                                                                                   (1, 112101, 'SUP.06277 - Programação Orientada a Objetos', '5N12 / 6N34', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 13, 2),
-                                                                                                                                   (2, 112100, 'SUP.06268 - Programação Web II', '2N45 / 4N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 7, 2),
-                                                                                                                                   (3, 112099, 'SUP.06267 - Probabilidade e Estatística', '2N23 / 3N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 41, 2),
-                                                                                                                                   (4, 112098, 'SUP.06266 - Estrutura de Dados', '5N34 / 6N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 19, 2),
-                                                                                                                                   (5, 112097, 'SUP.06269 - Banco de Dados', '3N34 / 4N34', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 26, 2),
-                                                                                                                                   (6, 112096, 'SUP.06271 - Atividade Curricular de Extensão II', '2N1 / 3N5 / 4N5 / 6N', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 21, 2),
-                                                                                                                                   (7, 112095, 'SUP.06263 - Sistemas Operacionais', '3N12 / 4N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 26, 1),
-                                                                                                                                   (8, 112094, 'SUP.06261 - Programação Web I', '2N23 / 3N34', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 7, 1),
-                                                                                                                                   (9, 112093, 'SUP.06259 - Programação II', '4N34 / 5N45', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 13, 1),
-                                                                                                                                   (10, 112092, 'SUP.06264 - Interação Humano-Computador', '2N45', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 32, 1),
-                                                                                                                                   (11, 112091, 'SUP.06265 - Atividade Curricular de Extensão I', '5N3 / 6N345', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 30, 1),
-                                                                                                                                   (12, 112090, 'SUP.06260 - Álgebra Linear', '5N12 / 6N12', 1, '2024-11-23 22:20:21', '2024-11-23 22:20:21', 35, 1);
+-- Copiando dados para a tabela gestaoedu.diarios: ~5 rows (aproximadamente)
+INSERT INTO `diarios` (`id`, `codigo`, `descricao`, `horario`, `status`, `total`, `ministrada`, `createdAt`, `updatedAt`, `professor_id`, `turma_id`) VALUES
+                                                                                                                                                          (1, 112094, 'SUP.06261 - Programação Web I', '2N23/3N34', 1, NULL, NULL, '2025-03-04 11:16:14', '2025-03-04 11:17:10', 7, 1),
+                                                                                                                                                          (2, 112093, 'SUP.06259 - Programação II', '4N34/5N45', 1, NULL, NULL, '2025-03-04 11:17:48', '2025-03-04 11:17:48', 13, 1),
+                                                                                                                                                          (3, 112092, 'SUP.06264 - Interação Humano-Computador', '2N45', 1, NULL, NULL, '2025-03-04 11:18:34', '2025-03-04 11:18:34', 32, 1),
+                                                                                                                                                          (4, 112095, 'SUP.06263 - Sistemas Operacionais', '3N12/4N12', 1, NULL, NULL, '2025-03-04 11:19:33', '2025-03-04 11:19:33', 26, 1),
+                                                                                                                                                          (5, 112090, 'SUP.06260 - Álgebra Linear', '5N12/6N12', 1, NULL, NULL, '2025-03-04 11:20:08', '2025-03-04 11:20:08', 35, 1);
+
+-- Copiando estrutura para tabela gestaoedu.dias
+CREATE TABLE IF NOT EXISTS `dias` (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                                      `dia` int(11) DEFAULT NULL,
+                                      `data` date DEFAULT NULL,
+                                      `sabado` int(11) DEFAULT NULL,
+                                      `createdAt` datetime NOT NULL,
+                                      `updatedAt` datetime NOT NULL,
+                                      `calendario_id` int(11) DEFAULT NULL,
+                                      PRIMARY KEY (`id`),
+                                      KEY `calendario_id` (`calendario_id`),
+                                      CONSTRAINT `dias_ibfk_1` FOREIGN KEY (`calendario_id`) REFERENCES `calendarios` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela gestaoedu.dias: ~95 rows (aproximadamente)
+INSERT INTO `dias` (`id`, `dia`, `data`, `sabado`, `createdAt`, `updatedAt`, `calendario_id`) VALUES
+                                                                                                  (21, 0, '2025-03-17', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (22, 1, '2025-03-18', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (23, 1, '2025-03-25', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (24, 4, '2025-03-21', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (25, 2, '2025-03-19', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (26, 3, '2025-03-20', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (27, 0, '2025-03-24', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (28, 2, '2025-03-26', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (29, 3, '2025-03-27', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (30, 4, '2025-03-28', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (31, 0, '2025-03-31', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (32, 1, '2025-04-01', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (33, 2, '2025-04-02', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (34, 3, '2025-04-03', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (35, 4, '2025-04-04', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (36, 0, '2025-04-07', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (37, 1, '2025-04-08', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (38, 2, '2025-04-09', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (39, 3, '2025-04-10', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (40, 4, '2025-04-11', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (41, 0, '2025-04-14', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (42, 1, '2025-04-15', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (43, 2, '2025-04-16', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (44, 3, '2025-04-17', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (45, 4, '2025-04-18', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (46, 0, '2025-04-21', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (47, 1, '2025-04-22', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (48, 2, '2025-04-23', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (49, 3, '2025-04-24', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (50, 4, '2025-04-25', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (51, 0, '2025-04-28', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (52, 1, '2025-04-29', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (53, 2, '2025-04-30', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (54, 3, '2025-05-01', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (55, 4, '2025-05-02', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (56, 0, '2025-05-05', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (57, 1, '2025-05-06', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (58, 2, '2025-05-07', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (59, 3, '2025-05-08', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (60, 4, '2025-05-09', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (61, 0, '2025-05-12', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (62, 1, '2025-05-13', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (63, 2, '2025-05-14', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (64, 3, '2025-05-15', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (65, 4, '2025-05-16', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (66, 0, '2025-05-19', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (67, 1, '2025-05-20', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (68, 2, '2025-05-21', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (69, 3, '2025-05-22', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (70, 4, '2025-05-23', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (71, 0, '2025-05-26', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (72, 1, '2025-05-27', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (73, 2, '2025-05-28', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (74, 3, '2025-05-29', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (75, 4, '2025-05-30', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (76, 0, '2025-06-02', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (77, 1, '2025-06-03', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (78, 2, '2025-06-04', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (79, 3, '2025-06-05', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (80, 4, '2025-06-06', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (81, 0, '2025-06-09', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (82, 1, '2025-06-10', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (83, 2, '2025-06-11', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (84, 3, '2025-06-12', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (85, 4, '2025-06-13', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (86, 0, '2025-06-16', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (87, 1, '2025-06-17', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (88, 2, '2025-06-18', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (89, 3, '2025-06-19', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (90, 4, '2025-06-20', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (91, 0, '2025-06-23', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (92, 1, '2025-06-24', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (93, 2, '2025-06-25', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (94, 3, '2025-06-26', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (95, 4, '2025-06-27', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (96, 0, '2025-06-30', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (97, 1, '2025-07-01', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (98, 2, '2025-07-02', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (99, 3, '2025-07-03', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (100, 4, '2025-07-04', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (101, 0, '2025-07-07', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (102, 1, '2025-07-08', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (103, 2, '2025-07-09', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (104, 3, '2025-07-10', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (105, 4, '2025-07-11', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (106, 0, '2025-07-14', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (107, 1, '2025-07-15', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (108, 2, '2025-07-16', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (109, 3, '2025-07-17', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (110, 4, '2025-07-18', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (111, 0, '2025-07-21', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (112, 1, '2025-07-22', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (113, 2, '2025-07-23', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (114, 3, '2025-07-24', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1),
+                                                                                                  (115, 4, '2025-07-25', 0, '2025-03-04 13:48:44', '2025-03-04 13:48:44', 1);
+
+-- Copiando estrutura para tabela gestaoedu.horarios
+CREATE TABLE IF NOT EXISTS `horarios` (
+                                          `id` int(11) NOT NULL AUTO_INCREMENT,
+                                          `turno` int(11) DEFAULT NULL,
+                                          `sequencia` int(11) DEFAULT NULL,
+                                          `status` int(11) DEFAULT NULL,
+                                          `createdAt` datetime NOT NULL,
+                                          `updatedAt` datetime NOT NULL,
+                                          `diario_id` int(11) DEFAULT NULL,
+                                          `dia_id` int(11) DEFAULT NULL,
+                                          PRIMARY KEY (`id`),
+                                          KEY `diario_id` (`diario_id`),
+                                          KEY `dia_id` (`dia_id`),
+                                          CONSTRAINT `horarios_ibfk_1` FOREIGN KEY (`diario_id`) REFERENCES `diarios` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+                                          CONSTRAINT `horarios_ibfk_2` FOREIGN KEY (`dia_id`) REFERENCES `dias` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela gestaoedu.horarios: ~0 rows (aproximadamente)
 
 -- Copiando estrutura para tabela gestaoedu.permutas
-DROP TABLE IF EXISTS `permutas`;
 CREATE TABLE IF NOT EXISTS `permutas` (
                                           `id` int(11) NOT NULL AUTO_INCREMENT,
-                                          `data` datetime NOT NULL,
+                                          `data` date NOT NULL,
                                           `dia` varchar(20) NOT NULL,
                                           `horarios` varchar(20) NOT NULL,
                                           `justificativa` varchar(250) NOT NULL,
@@ -91,17 +230,13 @@ CREATE TABLE IF NOT EXISTS `permutas` (
                                           KEY `substituto_id` (`substituto_id`),
                                           CONSTRAINT `permutas_ibfk_1` FOREIGN KEY (`diario_id`) REFERENCES `diarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                                           CONSTRAINT `permutas_ibfk_2` FOREIGN KEY (`substituto_id`) REFERENCES `diarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela gestaoedu.permutas: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela gestaoedu.permutas: ~0 rows (aproximadamente)
 INSERT INTO `permutas` (`id`, `data`, `dia`, `horarios`, `justificativa`, `status`, `createdAt`, `updatedAt`, `diario_id`, `substituto_id`) VALUES
-                                                                                                                                                (1, '2024-12-03 21:00:00', 'Quarta-feira', '5N12', 'Evento Científico', 1, '2024-12-02 08:51:38', '2024-12-02 09:19:48', 1, 4),
-                                                                                                                                                (2, '2024-12-03 21:00:00', 'Quarta-feira', '4N34', 'Evento Científico', 0, '2024-12-02 08:53:21', '2024-12-02 08:53:21', 9, 8),
-                                                                                                                                                (3, '2024-12-11 21:00:00', 'Quinta-feira', '2N45', 'Reunião de Coordenadores', 0, '2024-12-02 08:54:37', '2024-12-02 08:54:37', 2, 1),
-                                                                                                                                                (4, '2024-12-01 21:00:00', 'Segunda-feira', '2N23', 'Reunião de Coordenadores', 0, '2024-12-02 08:56:51', '2024-12-02 08:56:51', 8, 9);
+    (15, '2024-12-11', 'Quarta-feira', '4N23', 'Mais um teste de funcionamento', 0, '2024-12-09 01:51:08', '2024-12-09 01:51:08', 1, 2);
 
 -- Copiando estrutura para tabela gestaoedu.professores
-DROP TABLE IF EXISTS `professores`;
 CREATE TABLE IF NOT EXISTS `professores` (
                                              `id` int(11) NOT NULL AUTO_INCREMENT,
                                              `nome` varchar(100) NOT NULL,
@@ -157,7 +292,6 @@ INSERT INTO `professores` (`id`, `nome`, `siape`, `email`, `createdAt`, `updated
                                                                                          (41, 'Willams da Silva Lima', '1877101', 'willams.lima@ifma.edu.br', '2024-11-23 21:32:58', '2024-11-23 21:33:09');
 
 -- Copiando estrutura para tabela gestaoedu.turmas
-DROP TABLE IF EXISTS `turmas`;
 CREATE TABLE IF NOT EXISTS `turmas` (
                                         `id` int(11) NOT NULL AUTO_INCREMENT,
                                         `codigo` varchar(50) NOT NULL,
@@ -179,7 +313,6 @@ INSERT INTO `turmas` (`id`, `codigo`, `descricao`, `semestre`, `ano`, `status`, 
                                                                                                                           (2, '20242.3.ADS.CNT.1N', 'Módulo III', 2, 2024, 1, '2024-11-23 21:38:40', '2024-11-23 21:38:43', 1);
 
 -- Copiando estrutura para tabela gestaoedu.usuarios
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
                                           `id` int(11) NOT NULL AUTO_INCREMENT,
                                           `username` varchar(100) NOT NULL,

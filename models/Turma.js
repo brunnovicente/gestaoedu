@@ -1,5 +1,6 @@
 import banco from './banco.js'
 import Curso from "./Curso.js";
+import Calendario from "./Calendario.js";
 
 const Turma = banco.sequelize.define('turmas', {
     id:{

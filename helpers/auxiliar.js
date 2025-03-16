@@ -8,4 +8,19 @@ function gerarCodigo(t){
     return result;
 }
 
-export default {gerarCodigo}
+function definirTurno(codigo){
+    if (codigo.includes('N')) {
+        return 2; // Noturno
+    } else if (codigo.includes('V')) {
+        return 1; // Vespertino
+    } else if (codigo.includes('M')) {
+        return 0; // Matutino
+    }
+    return -1; // Caso não tenha nenhum dos identificadores
+}
+
+function pegarDias(){
+
+}
+
+export default {gerarCodigo, definirTurno}
