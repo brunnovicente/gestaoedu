@@ -46,6 +46,9 @@ servidor.engine('handlebars', handlebars.engine({
         },
         eq: (a, b) => a === b, // Compara dois valores
         or: (a, b) => a || b,
+        len: function (lista){
+            return lista.length
+        } ,
         formatDate: function (date) {
             const d =  new Date(date)
             d.setDate(d.getDate() + 1)

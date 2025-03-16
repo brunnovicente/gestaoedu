@@ -1,105 +1,78 @@
-<nav class="navbar bg-body-tertiary container-sm mb-2">
-    <div class="container-fluid">
-        <h4>Permutas</h4>
-        <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
-    </div>
-</nav>
-
 <div class="container-sm">
-    <div class="d-flex justify-content-center w-25 mx-auto">
-        <div class="me-3">FILTRO: </div>
-        <select class="form-select" id="status" onchange="filtrar()">
-            <option>Todas</option>
-            <option>Em Aberto</option>
-            <option>Pendente</option>
-            <option>Finalizada</option>
-        </select>
-    </div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>DIÁRIO</th>
+        <th>SUBSTITUTO</th>
+        <th>DATA</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
     {{#each permutas}}
-        {{#if (igual diario.turma.curso.professor_id ../usuario.professor.id)}}
-        <div id="linha" class="p-3 m-3 border rounded rounded-1" style="background-color: {{corPermuta status}}">
-
-            <ul class="nav justify-content-end mb-3">
-                {{#if (igual status 1)}}
-                    <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-dark me-2" href="/permuta/fechar/{{id}}"><i class="fa-solid fa-lock"></i> Fechar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
-                    </li>
-                {{/if}}
-                {{#if (igual status 0)}}
-                    <li class="nav-item">
-                        <button class="btn btn-sm btn-outline-dark me-2" onclick="abrir({{id}})"><i class="fa-solid fa-lock-open"></i> Abrir</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-sm btn-outline-dark me-2" onclick="excluir({{id}})"><i class="fa-solid fa-trash-can"></i> Excluir</button>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-dark me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
-                    </li>
-                {{/if}}
-
-            </ul>
-
-            <div class="row mb-3">
-                <div class="col-sm">
-                    <strong>DIÁRIO</strong>: {{diario.descricao}}
-                </div>
-                <div class="col-sm">
-                    <strong>PROFESSOR</strong>: {{diario.professor.nome}}
-                </div>
-                <!--COLUNA DO PROFESSOR-->
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>TURMA</strong>: {{diario.turma.descricao}}
-                </div>
-                <div class="col-sm">
-                    <strong>DATA</strong>: {{formatDate data}}
-                </div>
-                <div class="col-sm">
-                    <strong>DIA</strong>: {{dia}}
-                </div>
-                <div class="col-sm">
-                    <strong>HORARIOS: </strong>{{horarios}}
-                </div>
-            </div>
-
-            <hr>
-            <strong>Dados do Substituto</strong>
-            <div class="row mb-3 mt-2">
-                <div class="col-sm-5">
-                    <strong>DIÁRIO</strong>: {{substituto.descricao}}
-                </div>
-                <div class="col-sm-5">
-                    <strong>PROFESSOR</strong>: {{substituto.professor.nome}}
-                </div>
-                <div class="col-sm-2">
-                    <strong>STATUS: </strong> {{statusPermuta status}}
-                </div>
-                <!--COLUNA DO PROFESSOR-->
-            </div>
-            <strong>JUSTIFICATIVA: </strong> {{justificativa}}
-        </div>
-        {{/if}}
+        <tr>
+            <td>{{this.diario.descricao}}</td>
+            <td>{{this.substituto.descricao}}</td>
+            <td>{{this.data}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm verDetalhes"
+                        data-id="{{this.id}}"
+                        data-diario="{{this.diario.descricao}}"
+                        data-substituto="{{this.substituto.descricao}}"
+                        data-dia="{{this.dia}}"
+                        data-data="{{this.data}}"
+                        data-horario="{{this.horarios}}"
+                        data-justificativa="{{this.justificativa}}">
+                    Ver Detalhes
+                </button>
+            </td>
+        </tr>
     {{/each}}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="permutaModal" tabindex="-1" aria-labelledby="permutaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="permutalModalLabel">Detalhes da Permuta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>DIARIO:</strong> <span id="modalDiario"></span></p>
+                <p><strong>SUBSTITUTO:</strong> <span id="modalSubstituto"></span></p>
+                <p><strong>DATA:</strong> <span id="modalData"></span></p>
+                <p><strong>DIA:</strong> <span id="modalDia"></span></p>
+                <p><strong>HORÁRIOS:</strong> <span id="modalHorario"></span></p>
+                <p><strong>JUSTIFICATIVA:</strong> <span id="modalJustificativa"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = new bootstrap.Modal(document.getElementById("permutaModal"));
+
+        document.querySelectorAll(".verDetalhes").forEach(button => {
+            button.addEventListener("click", function () {
+                // Pega os atributos data-* do botão
+                document.getElementById("modalDiario").textContent = this.getAttribute("data-diario");
+                document.getElementById("modalSubstituto").textContent = this.getAttribute("data-substituto");
+                document.getElementById("modalData").textContent = this.getAttribute("data-data");
+                document.getElementById("modalDia").textContent = this.getAttribute("data-dia");
+                document.getElementById("modalHorario").textContent = this.getAttribute("data-horario");
+                document.getElementById("modalJustificativa").textContent = this.getAttribute("data-justificativa");
+
+                // Abre o modal
+                modal.show();
+            });
+        });
+    });
+</script>
 
 </div>
-
-<script>
-    function filtrar(){
-        var select = document.getElementById('status')
-        alert(select.value)
-    }
-    function excluir(id){
-        if(confirm('Deseja realmente excluir a Permuta?')){
-            document.location.href = '/permuta/delete/'+id
-        }
-    }
-    function abrir(id){
-        if(confirm('Deseja abrir a Permuta?')){
-            document.location.href = '/permuta/abrir/'+id
-        }
-    }
-</script>
