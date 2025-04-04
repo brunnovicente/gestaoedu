@@ -91,9 +91,10 @@ servidor.engine('handlebars', handlebars.engine({
         },
         corPermuta: function(status){
             switch (status) {
-                case 0: return "#DCDCDC";
-                case 1: return "#FFC0CB";
-                case 2: return "#90EE90"
+                case 0: return "#F0F8FF";
+                case 1: return "WHITE";
+                case 2: return "#F0FFF0";
+                case 3: return "WHITE";
             }
         },
         igual:function (a,b){
