@@ -23,7 +23,7 @@ const Permuta = banco.sequelize.define('permutas', {
         type: banco.Sequelize.STRING(250),
         allowNull: false
     },
-    status:{
+    status:{ //0 - Pendente, 1 - Aberta, 2 Fechada
         type: banco.Sequelize.INTEGER,
         allowNull: false
     }

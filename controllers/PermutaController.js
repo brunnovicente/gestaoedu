@@ -10,8 +10,8 @@ import permuta from "../models/Permuta.js";
 
 function definirDia(data){
     const daysOfWeek = [
-        'Segunda-feira', 'Terça-feira', 'Quarta-feira',
-        'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'
+        'Segunda', 'Terça', 'Quarta',
+        'Quinta', 'Sexta', 'Sábado', 'Domingo'
     ];
 
     // Converte a string em um objeto Date
