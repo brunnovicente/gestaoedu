@@ -23,11 +23,17 @@ const Diario = banco.sequelize.define('diarios', {
         type: banco.Sequelize.INTEGER,
         allowNull: false
     },
+    aulas:{
+        type: banco.Sequelize.INTEGER,
+    },
     total:{
         type: banco.Sequelize.INTEGER,
     },
     ministrada:{
         type: banco.Sequelize.INTEGER,
+    },
+    eixo:{
+        type: banco.Sequelize.STRING(20),
     }
 })
 
