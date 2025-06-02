@@ -1,38 +1,32 @@
 <div class="container-sm">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <h4>Calendários Acadêmicos</h4>
+            <h4>Calendário Acadêmico: {{calendario.ano}}.{{calendario.semestre}} - {{len dias}} dias letivos</h4>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item ms-2">
-                        <a href="/calendario/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-plus"></i> Dia
+                        </button>
                         <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="mx-auto">
+    <div class="w-50 mx-auto">
 
         <table class="table table-hover">
             <tr>
-                <th>ANO</th>
-                <th>SEMESTRE</th>
-                <th>INÍCIO</th>
-                <th>FIM</th>
-                <th>STATUS</th>
+                <th>DATA</th>
+                <th>DIA</th>
                 <th></th>
             </tr>
-            {{#each calendarios}}
+            {{#each dias}}
                 <tr>
-                    <td>{{ano}}</td>
-                    <td>{{semestre}}</td>
-                    <td>{{formatDate inicio}}</td>
-                    <td>{{formatDate fim}}</td>
-                    <td>{{status}}</td>
+                    <td>{{formatDate data}}</td>
+                    <td>{{diaSemana dia}}</td>
                     <td>
-                        <a class="btn btn-outline-secondary btn-sm" href="/calendario/gerenciar/{{id}}">Abrir</a>
-                        <a class="btn btn-outline-primary btn-sm" href="/calendario/demanda/{{id}}">Demanda</a>
                         <button class="btn btn-outline-danger btn-sm" onclick="excluirDia({{id}})">Excluir</button>
                     </td>
                 </tr>
@@ -53,7 +47,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/dia/salvar">
-            <div class="modal-body">
+                <div class="modal-body">
 
 
                     <input name="calendario_id" value="{{calendario.id}}" hidden="hidden">
@@ -69,14 +63,14 @@
                         <option value="3">Quinta</option>
                         <option value="4">Sexta</option>
                         <option value="5">Sábado</option>
-                      </select>
+                    </select>
 
 
-            </div>
-            <div class="modal-footer">
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-                <button type="submit" class="btn btn-primary">Salvar</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
             </form>
         </div>
     </div>

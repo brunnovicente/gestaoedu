@@ -18,12 +18,16 @@
             <label class="mt-3">DESCRIÇÃO</label>
             <input type="text" class="form-control" name="descricao">
 
-
-            <label class="mt-3">HORARIOS</label>
-            <input type="text" name="horario" class="form-control w-25" required>
-
-            <label class="mt-3">CARGA HORÁRIA</label>
-            <input type="number" name="total" class="form-control w-25" required>
+            <div class="row">
+                <div class="col">
+                    <label class="mt-3">HORARIOS</label>
+                    <input type="text" name="horario" class="form-control" required>
+                </div>
+                <div class="col">
+                    <label class="mt-3">CARGA HORÁRIA</label>
+                    <input type="number" name="total" class="form-control" required>
+                </div>
+            </div>
 
             <label class="mt-3">TURMA</label>
             <select id="turma" name="turma_id" class="form-select">
@@ -38,6 +42,33 @@
                     <option value="{{id}}">{{nome}}</option>
                 {{/each}}
             </select>
+
+
+            <DIV class="row">
+                <div class="col">
+                    <label class="mt-3" for="eixo">EIXO</label>
+                    <select name="eixo" class="form-select" id="eixo">
+                        <option value="Base Comum">Base Comum</option>
+                        <option value="Técnico">Técnico</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="mt-3">QTD AULAS</label>
+                    <input type="number" name="aulas" class="form-control" required>
+                </div>
+
+                <div class="col">
+                    <label class="mt-3">DIAS DE AULAS</label>
+                    <select name="eixo" class="form-select" id="eixo">
+                        <option value="Seg-Qua">Seg-Qua</option>
+                        <option value="Ter-Qui">Ter-Qui</option>
+                        <option value="Qua-Sex">Qua-Sex</option>
+                        <option value="Seg-Ter">Seg-Te</option>
+                        <option value="Qui-Sex">Qui-Sex</option>
+                    </select>
+                </div>
+            </DIV>
+
             <button class="btn btn-success mt-3">Salvar</button>
         </form>
     </div>

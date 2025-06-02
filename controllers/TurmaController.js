@@ -17,4 +17,14 @@ async function index(req, res) {
     res.render('turma/index', {turmas: turmas})
 }
 
+async function cadastrar(req, res) {
+    const novo = {
+        ano: req.body.ano,
+        semestre: req.body.semestre,
+        inicio: req.body.inicio,
+        fim: req.body.fim,
+        status: 1
+    }
+}
+
 export default {index}

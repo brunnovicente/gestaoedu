@@ -5,28 +5,31 @@ import cal from '../config/Calendario.js'
 class CalendarioController {
 
     index = async function(req, res){
+        let calendarios = await Calendario.findAll({
+            order:[['status','desc']]
+        })
+        res.render('calendario/index', {calendarios: calendarios})
+    }//Fim do index
+
+
+    gerenciar = async function(req, res){
         let calendario = await Calendario.findOne({
             where:{
-                status: 1
+                id: req.params.id
             }
         })
 
-        if(!calendario){
-            req.flash('error_msg', 'Não existem calendários cadastrado!')
-            res.render('calendario/index')
-        }else{
-            let dias = await Dia.findAll({
-                where:{
-                    calendario_id: calendario.id
-                },
-                order:[
-                    ['data', 'ASC']
-                ]
-            })
-            res.render('calendario/index', {calendario: calendario, dias: dias})
-        }
-    }//Fim do index
+        let dias = await Dia.findAll({
+            where:{
+                calendario_id: calendario.id
+            },
+            order:[
+                ['data', 'ASC']
+            ]
+        })
+        res.render('calendario/gerenciar', {calendario: calendario, dias: dias})
 
+    }//Fim do index
     cadastrar = function (req, res){
         res.render('calendario/cadastrar')
     }
