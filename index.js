@@ -20,8 +20,8 @@ auth(passport)
 const PORTA = 3000
 //Sessão
 servidor.use(session({
-    secret: "iambatman",
     resave: true,
+    secret: "iambatman",
     saveUninitialized: true,
 }))
 servidor.use(passport.initialize())

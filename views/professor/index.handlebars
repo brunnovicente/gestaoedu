@@ -1,8 +1,21 @@
 <div class="container-sm">
-    <nav class="navbar bg-body-tertiary container-sm mb-2">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <h4>Professores</h4>
-            <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i>Voltar</a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item ms-2">
+                        {{#if (igual usuario.categoria 3)}}
+                            <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#cadastroModal">
+                                Novo
+                            </button>
+                        {{/if}}
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <table class="table table-striped">
@@ -16,20 +29,50 @@
 
         {{#each professores}}
         <tr>
-            <td>{{siape}}</td>
-            <td>{{nome}}</td>
-            <td>{{email}}</td>
-            <td>{{categoriaUsuario usuario.categoria}}</td>
+            <td>{{this.siape}}</td>
+            <td>{{this.nome}}</td>
+            <td>{{this.email}}</td>
+            <td>{{categoriaUsuario this.usuario.categoria}}</td>
 
             <td class="">
-                {{#if (igual usuario.categoria 1)}}
-                    <a href="/usuario/promover/{{usuario.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-key"></i> Promover</a>
+                {{#if (igual ../usuario.categoria 3)}}
+                    <a href="/usuario/promover/{{this.usuario.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-key"></i> Promover</a>
                 {{/if}}
-
             </td>
         </tr>
         {{/each}}
 
     </table>
 
+</div>
+
+<!-- CADASTRAR -->
+<div class="modal fade" id="cadastroModal" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">CADASTRO DE PROFESSOR</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/professor/salvar" method="post">
+                <div class="modal-body">
+                    <div class="form-group mb-3 w-50">
+                        <label for="siape">SIAPE</label>
+                        <input type="text" class="form-control" id="siape" name="siape" placeholder="Digite o Siape">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="nome">NOME DO PROFESSOR</label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Digiter o nome do professor">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-MAIL INSTITUCIONAL</label>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Digite o e-mail">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

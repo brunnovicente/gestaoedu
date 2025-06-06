@@ -37,6 +37,7 @@ class CalendarioController {
     salvar = async function (req, res) {
 
         const novo = {
+            descricao: req.body.descricao,
             ano: req.body.ano,
             semestre: req.body.semestre,
             inicio: req.body.inicio,

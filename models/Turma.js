@@ -16,14 +16,6 @@ const Turma = banco.sequelize.define('turmas', {
         type: banco.Sequelize.STRING(100),
         allowNull: false
     },
-    semestre:{
-        type: banco.Sequelize.INTEGER,
-        allowNull: false
-    },
-    ano:{
-        type: banco.Sequelize.INTEGER,
-        allowNull: false
-    },
     status:{
         type: banco.Sequelize.INTEGER,
         allowNull: false
@@ -32,6 +24,12 @@ const Turma = banco.sequelize.define('turmas', {
 
 Turma.belongsTo(Curso, {
     foreignKey: 'curso_id',
+    constraint: true,
+    onDelete: 'CASCADE',
+})
+
+Turma.belongsTo(Calendario, {
+    foreignKey: 'calendario_id',
     constraint: true,
     onDelete: 'CASCADE',
 })
