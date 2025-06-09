@@ -1,11 +1,12 @@
 import Professor from "../models/Professor.js";
+import Calendario from "../models/Calendario.js";
 
-export default {
+class PrincipalController {
 
-    index: function (req, res){
-        //Professor.findByPk(req.user.professor_id).then(professor => {
-            res.render('principal/index');
-        //})
+    index = function(req, res) {
+        res.render('principal/index');
     }
 
-}//Fim do módulo
+}
+
+export default new PrincipalController()

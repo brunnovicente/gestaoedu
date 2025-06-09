@@ -1,6 +1,9 @@
 import Calendario from "../models/Calendario.js";
+import Turma from "../models/Turma.js";
 import Dia from "../models/Dia.js";
 import cal from '../config/Calendario.js'
+import Diario from "../models/Diario.js"
+import Professor from "../models/Professor.js"
 
 class CalendarioController {
 
@@ -30,6 +33,7 @@ class CalendarioController {
         res.render('calendario/gerenciar', {calendario: calendario, dias: dias})
 
     }//Fim do index
+
     cadastrar = function (req, res){
         res.render('calendario/cadastrar')
     }
@@ -73,6 +77,33 @@ class CalendarioController {
 
     }//Fim do Gerar
 
+    demanda = async function(req, res) {
+        var calendario = await Calendario.findOne({
+            where:{
+                id: req.params.id
+            }
+        })
+
+        var turmas = await Turma.findAll({
+            where:{
+                calendario_id: calendario.id
+            }
+        })
+
+        for(let i = 0; i < turmas.length; i++){
+            turmas[i].diarios = await Diario.findAll({
+                where:{
+                    turma_id: turmas[i].id
+                },
+                include:{
+                    model: Professor,
+                    as: 'professor'
+                }
+            })
+        }
+
+        res.render('calendario/demanda', {calendario: calendario, turmas: turmas});
+    }
 
 
 

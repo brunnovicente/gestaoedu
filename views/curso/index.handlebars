@@ -32,9 +32,11 @@
                 <td>{{descricao}}</td>
                 <td>{{professor.nome}}</td>
                 <td>
+                {{#if (igual usuario.categoria 3)}}
                     <button type="button" data-id="{{id}}" data-descricao="{{descricao}}" data-idprof = "{{professor.id}}" data-nomeprof = "{{professor.nome}}" class="btn-editar btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarModal">
                         Editar
                     </button>
+                {{/if}}
                 </td>
             </tr>
         {{/each}}
