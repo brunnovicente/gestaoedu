@@ -1,9 +1,12 @@
 import Calendario from "../models/Calendario.js";
 import Turma from "../models/Turma.js";
+import Curso from "../models/Curso.js";
 import Dia from "../models/Dia.js";
 import cal from '../config/Calendario.js'
 import Diario from "../models/Diario.js"
 import Professor from "../models/Professor.js"
+import Sequelize from 'sequelize'
+const { fn, col, literal } = Sequelize;
 
 class CalendarioController {
 
@@ -84,10 +87,30 @@ class CalendarioController {
             }
         })
 
+        var professores = await Professor.findAll()
+        for(let i = 0; i < professores.length; i++){
+
+            const aulas = await Diario.findOne({
+                attributes: [
+                    [fn('SUM', col('aulas')), 'total']
+                ],
+                where: {
+                    professor_id: professores[i].id
+                },
+                raw: true
+            });
+            professores[i].aulas = aulas.total
+        }
+        professores = professores.filter(prof => !!prof.aulas)
+        professores.sort((a, b) => b.aulas - a.aulas)
+
         var turmas = await Turma.findAll({
+            include:{
+                model: Curso
+            },
             where:{
                 calendario_id: calendario.id
-            }
+            },
         })
 
         for(let i = 0; i < turmas.length; i++){
@@ -102,7 +125,7 @@ class CalendarioController {
             })
         }
 
-        res.render('calendario/demanda', {calendario: calendario, turmas: turmas});
+        res.render('calendario/demanda', {calendario: calendario, turmas: turmas, professores: professores});
     }
 
 
