@@ -7,7 +7,7 @@ var transport = nodemailer.createTransport({
     host: "smtp.hostinger.com",
     port: 465,
     auth: {
-        user: "coordenacao@batcaverna.online",
+        user: "batcaverna@batcaverna.online",
         pass: "Bat#1104"
     }
 });

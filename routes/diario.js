@@ -9,5 +9,6 @@ router.get('/', autorizar(['Coordenador','DE']), DiarioController.index)
 router.post('/salvar', autorizar(['Coordenador','DE']), DiarioController.salvar)
 router.get('/editar/:id', autorizar(['Coordenador','DE']), DiarioController.editar)
 router.post('/editar', autorizar(['Coordenador','DE']), DiarioController.modificar)
+router.post('/editarprofessor', autorizar(['Coordenador','DE']), DiarioController.editarprofessor)
 
 export default router;

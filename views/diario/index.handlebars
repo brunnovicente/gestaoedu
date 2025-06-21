@@ -76,13 +76,13 @@
                             <input type="text" name="horario" class="form-control">
                         </div>
                         <div class="col">
-                            <label class="mt-3">CARGA HORÁRIA</label>
+                            <label class="mt-3">CARGA HORÁRIA SEMESTRAL</label>
                             <input type="number" name="total" class="form-control" required>
                         </div>
                     </div>
 
                     <label class="mt-3">TURMA</label>
-                    <select id="turma" name="turma_id" class="form-select">
+                    <select id="turma" name="turma_id" class="form-select" required>
                         {{#each turmas}}
                             <option value="{{id}}">{{descricao}} - {{curso.descricao}}</option>
                         {{/each}}

@@ -17,6 +17,9 @@ const Professor = banco.sequelize.define('professores', {
     email:{
         type: banco.Sequelize.STRING(100),
         allowNull: false
+    },
+    status: {
+        type: banco.Sequelize.INTEGER,
     }
 })
 

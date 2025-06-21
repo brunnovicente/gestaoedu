@@ -36,8 +36,19 @@
 
             <td class="">
                 {{#if (igual ../usuario.categoria 3)}}
-                    <a href="/usuario/promover/{{this.usuario.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-key"></i> Promover</a>
+
+                    <button type="button" class="btn btn-sm btn-outline-dark btn-editar" data-id="{{this.usuario.id}}" data-categoria="{{this.usuario.categoria}}" data-nome="{{this.nome}}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa-solid fa-circle-up"></i> Promover
+                    </button>
+
+                    {{#if (igual status 1)}}
+                        <a href="/professor/desativar/{{id}}" class="btn btn-sm btn-outline-danger"><i class="fa-regular fa-circle-xmark"></i> Desativar</a>
+                    {{/if}}
+                    {{#if (igual status 0)}}
+                        <a href="/professor/ativar/{{id}}" class="btn btn-sm btn-outline-success"><i class="fa-regular fa-circle-check"></i> Ativar</a>
+                    {{/if}}
                 {{/if}}
+
             </td>
         </tr>
         {{/each}}
@@ -76,3 +87,56 @@
         </div>
     </div>
 </div>
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Promover Professor</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/usuario/promover" method="post">
+                <div class="modal-body">
+
+                        <input id="id" name="id" hidden="hidden">
+                        <input type="text" name="nome" id="nomeprofessor" class="form-control mb-3">
+                        <select name="categoria" id="categoria" class="form-select">
+                            <option value="1">Docente</option>
+                            <option value="2">Coordenador</option>
+                            <option value="3">Departamento de Ensino</option>
+                        </select>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnEditar = document.querySelectorAll('.btn-editar');
+
+        btnEditar.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                const nome = btn.getAttribute('data-nome');
+                const categoria = btn.getAttribute('data-categoria')
+
+                document.getElementById('id').value = id;
+                document.getElementById('nomeprofessor').value = nome
+
+                const select = document.getElementById('categoria');
+                select.value = categoria;
+
+            });
+        });
+    });
+</script>

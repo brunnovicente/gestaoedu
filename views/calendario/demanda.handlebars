@@ -26,10 +26,12 @@
                     <th>AULAS</th>
                 </tr>
                 {{#each professores}}
-                    <tr>
-                        <td>{{this.nome}}</td>
-                        <td>{{this.aulas}}</td>
-                    </tr>
+                    {{#if (diferente this.aulas 0)}}
+                        <tr>
+                            <td>{{this.nome}}</td>
+                            <td>{{this.aulas}}</td>
+                        </tr>
+                    {{/if}}
                 {{/each}}
             </table>
         </div>
@@ -37,11 +39,13 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" id="turmaTabs" role="tablist">
                 {{#each turmas}}
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link {{#if @first}}active{{/if}}" id="tab-{{id}}" data-bs-toggle="tab" data-bs-target="#turma-{{id}}" type="button" role="tab">
-                            {{descricao}}
-                        </button>
-                    </li>
+
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link {{#if @first}}active{{/if}}" id="tab-{{id}}" data-bs-toggle="tab" data-bs-target="#turma-{{id}}" type="button" role="tab">
+                                {{descricao}}
+                            </button>
+                        </li>
+
                 {{/each}}
             </ul>
 
@@ -61,18 +65,20 @@
                                 <tr>
                                     <td>{{this.descricao}}</td>
                                     <td>{{this.aulas}}</td>
+                                    <form method="post" action="/diario/editarprofessor">
                                     <td>
-                                        <form>
-                                            <select name="" id="" class="form-select">
+                                        <input type="text" value="{{../../calendario.id}}" name="calendario_id" hidden="hidden">
+                                        <input type="text" value="{{this.id}}" name="id" hidden="hidden">
+                                            <select name="professor_id" id="professor_id" class="form-select">
                                             {{#each ../../professores}}
                                                 <option {{#if (eq this.id ../professor.id)}}selected{{/if}} value="{{id}}">{{nome}}</option>
                                             {{/each}}
                                             </select>
-                                        </form>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Editar</a>
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Salvar</button>
                                     </td>
+                                    </form>
                                 </tr>
                             {{/each}}
                         </table>

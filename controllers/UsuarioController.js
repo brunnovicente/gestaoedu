@@ -34,8 +34,19 @@ export default {
     },
 
     promover: function(req, res){
-        Usuario.findByPk(req.params.id).then(function(usuario){
-            res.redirect('/principal')
+        var id = req.body.id;
+        var categoria = req.body.categoria
+
+        var usuario = {
+            id: id,
+            categoria: categoria,
+        }
+
+        Usuario.update(usuario, {
+            where:{id : id}
+        }).then(function () {
+            req.flash('Usuário promovido com sucesso!')
+            res.redirect('/professor')
         })
     },//fim do promover
 

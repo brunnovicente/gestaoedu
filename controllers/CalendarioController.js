@@ -99,9 +99,16 @@ class CalendarioController {
                 },
                 raw: true
             });
-            professores[i].aulas = aulas.total
+            console.log('Aulas: '+aulas.total)
+            if(aulas.total){
+                professores[i].aulas = aulas.total
+            }else{
+                professores[i].aulas = 0
+            }
+
+
         }
-        professores = professores.filter(prof => !!prof.aulas)
+        //professores = professores.filter(prof => !!prof.aulas)
         professores.sort((a, b) => b.aulas - a.aulas)
 
         var turmas = await Turma.findAll({

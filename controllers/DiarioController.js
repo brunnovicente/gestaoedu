@@ -42,7 +42,7 @@ class DiarioController {
             }
         })
 
-        var professores = await Professor.findAll();
+        var professores = await Professor.findAll({where: {status: 1}});
 
         res.render('diario/index', {diarios: diarios, turmas: turmas, professores: professores});
     }
@@ -107,6 +107,26 @@ class DiarioController {
             ]
         });
         res.render('diario/editar', {diario:diario, turmas:turmas, professores: professores})
+    }
+
+    editarprofessor = async function(req, res){
+
+        var diario = {
+            professor_id: req.body.professor_id,
+        }
+        var calendario_id = req.body.calendario_id
+
+        Diario.update(diario, {
+            where:{
+                id: req.body.id
+            }
+        }).then(function(){
+            req.flash('sucess_msg', 'Alterações salvas com sucesso!')
+            res.redirect('/calendario/demanda/'+calendario_id)
+        })
+
+
+
     }
 
     modificar = function (req, res){
