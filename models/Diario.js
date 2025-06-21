@@ -32,21 +32,13 @@ const Diario = banco.sequelize.define('diarios', {
     ministrada:{
         type: banco.Sequelize.INTEGER,
     },
-<<<<<<< HEAD
-    aulas:{
-        type: banco.Sequelize.INTEGER,
-    },
     eixo:{
         type: banco.Sequelize.STRING(25),
     },
     dias:{
         type: banco.Sequelize.STRING(25),
     },
-=======
-    eixo:{
-        type: banco.Sequelize.STRING(20),
-    }
->>>>>>> 5993ec19c66a96b8090a6c17eb6585df219d40fe
+
 })
 
 Diario.belongsTo(Professor, {
