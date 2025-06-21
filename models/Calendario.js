@@ -7,6 +7,9 @@ const Calendario = banco.sequelize.define('calendarios', {
         primaryKey: true,
         autoIncrement: true
     },
+    descricao:{
+        type: banco.Sequelize.STRING(100),
+    },
     ano:{
         type: banco.Sequelize.INTEGER,
     },

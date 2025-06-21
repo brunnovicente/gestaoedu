@@ -5,7 +5,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="/turma/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
+                        <!--<a href="/turma/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>-->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroModal">
+                            <i class="fa-solid fa-plus"></i> Novo
+                        </button>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
@@ -19,7 +22,7 @@
         <tr>
             <th>CODIGO</th>
             <th>DESCRIÇÃO</th>
-            <th>SEMESTRE</th>
+            <th>CALENDÁRIO</th>
             <th>CURSO</th>
             <th></th>
         </tr>
@@ -28,7 +31,7 @@
             <tr>
                 <td>{{codigo}}</td>
                 <td>{{descricao}}</td>
-                <td>{{ano}}.{{semestre}}</td>
+                <td>{{calendario.descricao}} - {{calendario.ano}}.{{calendario.semestre}}</td>
                 <td>{{curso.descricao}}</td>
                 <td>
                     <a class="btn btn-sm btn-outline-primary" href="/turma/editar/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
@@ -38,4 +41,53 @@
 
     </table>
 
+</div>
+
+
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--    Launch demo modal-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="cadastroModal" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Turma</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/turma/salvar">
+                <div class="modal-body p-2">
+                    <div class="form-group mb-4">
+                        <label for="">CURSO</label>
+                        <input type="text" class="form-control" disabled value="{{curso.descricao}}">
+                        <input type="text" hidden="hidden" id="curso" name="curso" value="{{curso.id}}">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="">CÓDIGO</label>
+                        <input type="text" name="codigo" id="codigo" class="form-control">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="">DESCRIÇÃO</label>
+                        <input type="text" name="descricao" id="descricao" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="">CALENDÁRIO</label>
+                        <select name="calendario" id="calendario" class="form-select" required>
+                            {{#each calendarios}}
+                                <option value="{{id}}">{{descricao}} - {{ano}}.{{semestre}} </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

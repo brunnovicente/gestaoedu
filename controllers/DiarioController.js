@@ -1,6 +1,7 @@
 import Diario from '../models/Diario.js';
 import Turma from '../models/Turma.js'
 import Curso from '../models/Curso.js'
+import Calendario from "../models/Calendario.js"
 import Horario from '../models/Horario.js'
 import Professor from '../models/Professor.js';
 import auxiliar  from "../helpers/auxiliar.js";
@@ -16,16 +17,34 @@ class DiarioController {
                 },{
                     model: Turma,
                     required: true,
-                    include:{
-                        model: Curso,
-                        where:{
-                            professor_id: req.user.professor.id
+                    include:[
+                        {
+                            model: Curso,
+                            where:{
+                                professor_id: req.user.professor.id
+                            },
                         },
-                    }
+                        {
+                            model: Calendario
+                        }
+                    ]
                 }
             ]
         });
-        res.render('diario/index', {diarios: diarios})
+
+        var turmas = await Turma.findAll({
+            include:{
+                model: Curso,
+                required: true,
+                where:{
+                    status: 1
+                }
+            }
+        })
+
+        var professores = await Professor.findAll({where: {status: 1}});
+
+        res.render('diario/index', {diarios: diarios, turmas: turmas, professores: professores});
     }
 
     cadastrar = async function(req, res){
@@ -50,6 +69,9 @@ class DiarioController {
             horario: req.body.horario,
             status: 1,
             total: req.body.total,
+            eixo: req.body.eixo,
+            aulas: req.body.aulas,
+            dias: req.body.dias,
             ministrada: 0,
             professor_id: req.body.professor_id,
             turma_id: req.body.turma_id,
@@ -85,6 +107,26 @@ class DiarioController {
             ]
         });
         res.render('diario/editar', {diario:diario, turmas:turmas, professores: professores})
+    }
+
+    editarprofessor = async function(req, res){
+
+        var diario = {
+            professor_id: req.body.professor_id,
+        }
+        var calendario_id = req.body.calendario_id
+
+        Diario.update(diario, {
+            where:{
+                id: req.body.id
+            }
+        }).then(function(){
+            req.flash('sucess_msg', 'Alterações salvas com sucesso!')
+            res.redirect('/calendario/demanda/'+calendario_id)
+        })
+
+
+
     }
 
     modificar = function (req, res){

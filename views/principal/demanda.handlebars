@@ -1,0 +1,17 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-3">
+            <h5>CALENDÁRIOS</h5>
+            <select class="form-select" name="calendario" id="calendario">
+                {{#each calendarios}}
+                    <option value="{{this.id}}">
+                        {{this.descricao}} - {{this.ano}}.{{this.semestre}}
+                    </option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+
+</div>

@@ -5,6 +5,14 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item ms-2">
+                        <!-- Button trigger modal -->
+                        {{#if (igual usuario.categoria 3)}}
+                            <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#cadastroModal">
+                                Novo
+                            </button>
+                        {{/if}}
+                    </li>
+                    <li class="nav-item ms-2">
                         <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
                     </li>
                 </ul>
@@ -16,15 +24,128 @@
         <tr>
             <th>DESCRIÇÃO</th>
             <th>COORDENADOR</th>
+            <th></th>
         </tr>
 
         {{#each cursos}}
             <tr>
                 <td>{{descricao}}</td>
                 <td>{{professor.nome}}</td>
+                <td>
+                {{#if (igual ../usuario.categoria 3)}}
+                    <button type="button" data-id="{{id}}" data-descricao="{{descricao}}" data-sigla = "{{sigla}}"  data-idprof = "{{professor.id}}" data-nomeprof = "{{professor.nome}}" class="btn-editar btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarModal">
+                        Editar
+                    </button>
+                {{/if}}
+                </td>
             </tr>
         {{/each}}
 
     </table>
 
 </div>
+
+
+
+<!-- CADASTRAR -->
+<div class="modal fade" id="cadastroModal" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">CADASTRO DE CURSO</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/curso/salvar" method="post">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="coordenador">COORDENADOR</label>
+                        <select name="coordenador" id="coordenador" class="form-select">
+                            {{#each professores}}
+                                <option value="{{this.id}}">{{this.nome}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao">NOME DO CURSO</label>
+                        <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Digite o nome do curso">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sigla">SIGLA</label>
+                        <input type="text" name="sigla" id="sigla" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- EDITAR -->
+<!-- Modal -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">EDITAR CURSO</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/curso/editar" method="post">
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <input type="number"  name="id" id="id" hidden="hidden">
+
+                            <label for="coordenador2">COORDENADOR</label>
+
+                            <select name="coordenador2" id="coordenador2" class="form-select">
+                                {{#each professores}}
+                                    <option value="{{this.id}}">{{this.nome}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">NOME DO CURSO</label>
+                            <input type="text" name="descricao2" id="descricao2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">SIGLA</label>
+                            <input type="text" name="sigla" id="sigla2" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const botoesEditar = document.querySelectorAll('.btn-editar');
+
+        botoesEditar.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                const descricao = btn.getAttribute('data-descricao');
+                const sigla = btn.getAttribute('data-sigla');
+                const idprof = btn.getAttribute('data-idprof');
+                const nomeprof = btn.getAttribute('data-nomeprof');
+
+                document.getElementById('id').value = id;
+                document.getElementById('descricao2').value = descricao;
+                document.getElementById('sigla2').value = sigla;
+
+                // Seleciona o professor no select
+                const select = document.getElementById('coordenador2');
+                select.value = idprof;
+
+            });
+        });
+    });
+</script>

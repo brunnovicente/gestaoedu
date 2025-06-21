@@ -13,6 +13,6 @@ router.get('/esqueceu', (req, res)=> res.render('usuario/esqueceu', {layout: 'se
 router.post('/esqueceu', usuarioController.esqueceu);
 router.get('/alterarsenha', isLogado,(req, res)=> res.render('usuario/alterarsenha'));
 router.post('/alterarsenha',isLogado, usuarioController.alterarsenha)
-router.get('/promover/:id', autorizar(['Supremo']), usuarioController.promover);
+router.post('/promover', autorizar(['DE']), usuarioController.promover);
 
 export default router;

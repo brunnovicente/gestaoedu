@@ -5,7 +5,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="/diario/cadastrar" class="btn btn-outline-dark"><i class="fa-solid fa-plus"></i> Novo</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroModal">
+                            <i class="fa-solid fa-plus"></i> Novo
+                        </button>
                     </li>
                     <li class="nav-item ms-2">
                         <a href="/principal" class="btn btn-outline-dark"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
@@ -20,9 +22,8 @@
             <th>DESCRIÇÃO</th>
             <th>HORARIO</th>
             <th>PROFESSOR</th>
-            <th>CURSO</th>
             <th>TURMA</th>
-            <th>ANO</th>
+            <th>CALENDÁRIO</th>
             <th></th>
         </tr>
 
@@ -31,16 +32,100 @@
                 <td>{{descricao}}</td>
                 <td>{{horario}}</td>
                 <td>{{professor.nome}}</td>
-                <td>{{turma.curso.descricao}}</td>
                 <td>{{turma.descricao}}</td>
-                <td>{{turma.ano}}</td>
+                <td>{{turma.calendario.descricao}} - {{turma.calendario.ano}}.{{turma.calendario.semestre}}</td>
                 <td>
-                    <a class="btn btn-sm btn-outline-primary" href="/diario/horario/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Horarios</a>
-                    <a class="btn btn-sm btn-outline-primary" href="/diario/editar/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item text-secondary" href="/diario/horario/{{id}}"><i class="fa-regular fa-calendar-days"></i> Horarios</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-primary" href="/diario/editar/{{id}}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {{/each}}
 
     </table>
 
+</div>
+
+<div class="modal fade" id="cadastroModal" tabindex="-1" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de Diário</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/diario/salvar">
+                <div class="modal-body p-2">
+                    <label>CODIGO</label>
+                    <input type="number" class="form-control w-25" name="codigo">
+                    <label class="mt-3">DESCRIÇÃO</label>
+                    <input type="text" class="form-control" name="descricao">
+
+                    <div class="row">
+                        <div class="col">
+                            <label class="mt-3">HORARIOS</label>
+                            <input type="text" name="horario" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label class="mt-3">CARGA HORÁRIA SEMESTRAL</label>
+                            <input type="number" name="total" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <label class="mt-3">TURMA</label>
+                    <select id="turma" name="turma_id" class="form-select" required>
+                        {{#each turmas}}
+                            <option value="{{id}}">{{descricao}} - {{curso.descricao}}</option>
+                        {{/each}}
+                    </select>
+
+                    <label class="mt-3" for="professor_id">PROFESSOR</label>
+                    <select name="professor_id" class="form-select" id="professor_id">
+                        {{#each professores}}
+                            <option value="{{id}}">{{nome}}</option>
+                        {{/each}}
+                    </select>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label class="mt-3" for="eixo">EIXO</label>
+                            <select name="eixo" class="form-select" id="eixo">
+                                <option value="Superior">Superior</option>
+                                <option value="Base Comum">Base Comum</option>
+                                <option value="Técnico">Técnico</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="mt-3">QTD AULAS</label>
+                            <input type="number" name="aulas" class="form-control" required>
+                        </div>
+
+                        <div class="col">
+                            <label class="mt-3">DIAS DE AULAS</label>
+                            <select name="dias" class="form-select" id="dias">
+                                <option value="Seg-Qua">Seg-Qua</option>
+                                <option value="Ter-Qui">Ter-Qui</option>
+                                <option value="Qua-Sex">Qua-Sex</option>
+                                <option value="Seg-Ter">Seg-Te</option>
+                                <option value="Qui-Sex">Qui-Sex</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

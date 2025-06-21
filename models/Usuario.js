@@ -13,7 +13,7 @@ const Usuario = banco.sequelize.define('usuarios', {
     },
     password: {
         type: banco.Sequelize.STRING(250),
-        allowNull: false
+        allowNull: true
     },
     categoria:{
         type: banco.Sequelize.INTEGER,
