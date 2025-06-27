@@ -8,6 +8,11 @@ import Calendario from "./Calendario.js";
 import Dia from "./Dia.js";
 import Horario from "./Horario.js";
 
+import Aluno from "./Aluno.js";
+import Modalidade from "./Modalidade.js";
+import Time from "./Time.js";
+import Membro from "./Membro.js";
+
 await Professor.sync()
 await Usuario.sync()
 await Curso.sync()
@@ -17,3 +22,7 @@ await Diario.sync()
 await Permuta.sync()
 await Dia.sync()
 await Horario.sync()
+await Aluno.sync()
+await Modalidade.sync()
+await Time.sync()
+await Membro.sync()
