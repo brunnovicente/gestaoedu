@@ -46,6 +46,7 @@ servidor.engine('handlebars', handlebars.engine({
         },
         eq: (a, b) => a === b, // Compara dois valores
         or: (a, b) => a || b,
+        menor: (a, b) => a < b,
         len: function (lista){
             return lista.length
         } ,
@@ -150,5 +151,8 @@ servidor.use('/calendario', calendario)
 
 import dia from './routes/dia.js'
 servidor.use('/dia', dia)
+
+import evento from './routes/evento.js'
+servidor.use('/evento', evento)
 
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))
