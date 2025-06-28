@@ -234,8 +234,44 @@ class EventoController{
         res.json(dado);
     }
 
-    verificarDuplicataIndividual = async function (req, res){
+    relatorio = async function (req, res){
+        const modalidades = await Modalidade.findAll()
+        res.render('evento/relatorio', {modalidades: modalidades})
+    }
 
+    lista = async function (req, res){
+        const modalidade = await Modalidade.findOne({
+            where:{
+                id: req.params.id
+            }
+        })
+
+        const times = await Time.findAll({
+            where:{
+                modalidade_id: modalidade.id
+            },
+            include:{
+                model: Modalidade,
+            }
+        })
+
+        for(let i=0;i < times.length;i++){
+            times[i].membros = await Membro.findAll({
+                where:{
+                    time_id: times[i].id
+                },
+                include:{
+                    model: Aluno
+                }
+            })
+        }
+
+        res.render('evento/lista', {modalidade:modalidade, times: times})
+    }
+
+    aluno = async function(req, res){
+        const alunos = await Aluno.findAll({order: [['nome', 'ASC']]})
+        res.render('evento/aluno', {alunos: alunos})
     }
 
 }

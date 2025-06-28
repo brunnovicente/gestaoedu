@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="d-flex justify-content-between py-2">
+        <h4>{{modalidade.descricao}}</h4>
+        <a href="/evento/relatorio" class="btn btn-sm btn-secondary">< Voltar</a>
+    </div>
+    {{#if (igual modalidade.tipo 1)}}
+        <table class="table table-striped">
+            <tr>
+                <th>TIME</th>
+                <th>MEMBROS</th>
+            </tr>
+            {{#each times}}
+                <tr>
+                    <td>{{descricao}}</td>
+                    <td>
+                        {{#each membros}}
+                            <p>{{aluno.nome}}</p>
+                        {{/each}}
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+    {{/if}}
+
+    {{#if (igual modalidade.tipo 2)}}
+        <table class="table table-striped">
+            <tr>
+                <th>INSCRITOS</th>
+            </tr>
+            {{#each times}}
+                <tr>
+                    <td>
+                        {{#each membros}}
+                            <p>{{aluno.nome}}</p>
+                        {{/each}}
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+    {{/if}}
+</div>
