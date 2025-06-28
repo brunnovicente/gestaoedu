@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="d-flex justify-content-between py-2">
+        <h5>Alunos Inscritos</h5>
+        <a href="/evento/relatorio" class="btn btn-sm btn-outline-secondary">< Voltar</a>
+    </div>
+
+    <p>TOTAL DE INSCRITOS: {{len alunos}} alunos inscritos</p>
+    <table class="table table-striped">
+        <tr>
+            <th>MATRÍCULA</th>
+            <th>NOME</th>
+            <th>CURSO</th>
+            <th>E-MAIL</th>
+        </tr>
+        {{#each alunos}}
+            <tr>
+                <td>{{matricula}}</td>
+                <td>{{nome}}</td>
+                <td>{{curso}}</td>
+                <td>{{email}}</td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
