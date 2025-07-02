@@ -20,10 +20,19 @@ class EventoController{
             curso: req.body.curso,
             matricula: req.body.matricula,
         }
-        Aluno.create(aluno).then(function (aluno){
-            req.flash('success_msg', 'Aluno cadastrado com sucesso!')
-            res.redirect('/evento/inscricao/'+aluno.id);
-        })
+        aluno.matricula = aluno.matricula.toUpperCase();
+
+        const discente = Aluno.findOne({where: {matricula: aluno.matricula}});
+
+        if(discente){
+            req.flash('error_msg', 'Aluno já cadastrado!')
+            res.redirect('/evento/inscricao/'+discente.id);
+        }else{
+            Aluno.create(aluno).then(function (aluno){
+                req.flash('success_msg', 'Aluno cadastrado com sucesso!')
+                res.redirect('/evento/inscricao/'+aluno.id);
+            })
+        }
     }
 
     inscricao = async function (req, res){
