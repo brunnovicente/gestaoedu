@@ -15,7 +15,11 @@
         {{#each alunos}}
             <tr>
                 <td>{{matricula}}</td>
-                <td>{{nome}}</td>
+                <td>
+                    <a href="/evento/inscricao/{{id}}">
+                        {{nome}}
+                    </a>
+                </td>
                 <td>{{curso}}</td>
                 <td>{{email}}</td>
             </tr>
