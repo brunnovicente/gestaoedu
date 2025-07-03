@@ -13,7 +13,7 @@ class EventoController{
         res.render('evento/cadastro', {layout: 'branco'})
     }
 
-    salvar = function (req, res){
+    salvar = async function (req, res){
         var aluno = {
             nome: req.body.nome,
             email: req.body.email,
@@ -22,7 +22,7 @@ class EventoController{
         }
         aluno.matricula = aluno.matricula.toUpperCase();
 
-        const discente = Aluno.findOne({where: {matricula: aluno.matricula}});
+        const discente = await Aluno.findOne({where: {matricula: aluno.matricula}});
 
         if(discente){
             req.flash('error_msg', 'Aluno já cadastrado!')
