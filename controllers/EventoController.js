@@ -104,6 +104,7 @@ class EventoController{
 
         aluno.individuais = individuais
         aluno.coletivas = coletivas
+        aluno.total = individuais.length + coletivas.length
 
 
         // aluno.individuais = await Time.findAll({
