@@ -1,12 +1,23 @@
 import Turma from '../models/Turma.js'
 import Curso from "../models/Curso.js";
 import Calendario from "../models/Calendario.js";
+import Professor from "../models/Professor.js";
 
 async function index(req, res) {
     var turmas = await Turma.findAll({
         include:[
             {
                 model: Curso,
+                required: true,
+                include:[
+                    {
+                        model: Professor,
+                        as: 'professor',
+                        where:{
+                            id: req.user.professor.id
+                        }
+                    }
+                ]
             },
             {
                 model: Calendario,
