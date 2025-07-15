@@ -155,4 +155,10 @@ servidor.use('/dia', dia)
 import evento from './routes/evento.js'
 servidor.use('/evento', evento)
 
+import ingresso from './routes/ingresso.js'
+servidor.use('/ingresso.handlebars', ingresso)
+
+import discente from './routes/discente.js'
+servidor.use('/discente', discente)
+
 servidor.listen(PORTA, () => console.log("Servidor iniciado em http://localhost:"+PORTA))
