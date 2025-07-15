@@ -7,11 +7,13 @@ import Permuta from "./Permuta.js";
 import Calendario from "./Calendario.js";
 import Dia from "./Dia.js";
 import Horario from "./Horario.js";
+import Discente from "./Discente.js";
 
 import Aluno from "./Aluno.js";
 import Modalidade from "./Modalidade.js";
 import Time from "./Time.js";
 import Membro from "./Membro.js";
+import Ingresso from "./Ingresso.js";
 
 await Professor.sync()
 await Usuario.sync()
@@ -22,6 +24,9 @@ await Diario.sync()
 await Permuta.sync()
 await Dia.sync()
 await Horario.sync()
+await Discente.sync()
+
+await Ingresso.sync()
 await Aluno.sync()
 await Modalidade.sync()
 await Time.sync()
