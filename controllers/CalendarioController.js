@@ -131,8 +131,11 @@ class CalendarioController {
                 }
             })
         }
-
-        res.render('calendario/demanda', {calendario: calendario, turmas: turmas, professores: professores});
+        var ativo = req.params.ativo
+        if(ativo == 0){
+           ativo = turmas[0].id
+        }
+        res.render('calendario/demanda', {ativo: ativo, calendario: calendario, turmas: turmas, professores: professores});
     }
 
 

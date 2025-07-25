@@ -111,18 +111,25 @@ class DiarioController {
 
     editarprofessor = async function(req, res){
 
-        var diario = {
+        var diario = await Diario.findOne({where:{id: req.body.id},})
+
+        var dados = {
+            id: req.body.id,
             professor_id: req.body.professor_id,
+            aulas: req.body.aulas
         }
+        //diario.professor_id = req.body.professor_id
+        //diario.aulas = req.body.aulas
+
         var calendario_id = req.body.calendario_id
 
-        Diario.update(diario, {
+        Diario.update(dados, {
             where:{
                 id: req.body.id
             }
         }).then(function(){
             req.flash('sucess_msg', 'Alterações salvas com sucesso!')
-            res.redirect('/calendario/demanda/'+calendario_id)
+            res.redirect('/calendario/demanda/'+calendario_id+'/'+diario.turma_id)
         })
 
 

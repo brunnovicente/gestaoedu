@@ -99,7 +99,7 @@ servidor.engine('handlebars', handlebars.engine({
             }
         },
         igual:function (a,b){
-            return a === b
+            return a == b
         },
         diferente:function (a,b){
             return a !== b
