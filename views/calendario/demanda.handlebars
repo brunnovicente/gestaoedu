@@ -41,7 +41,7 @@
                 {{#each turmas}}
 
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link {{#if @first}}active{{/if}}" id="tab-{{id}}" data-bs-toggle="tab" data-bs-target="#turma-{{id}}" type="button" role="tab">
+                            <button class="nav-link {{#if (igual ../ativo id)}}active{{/if}}" id="tab-{{id}}" data-bs-toggle="tab" data-bs-target="#turma-{{id}}" type="button" role="tab">
                                 {{descricao}}
                             </button>
                         </li>
@@ -49,10 +49,10 @@
                 {{/each}}
             </ul>
 
-            <!-- Tab panes -->
+            <!-- Tab panes @first -->
             <div class="tab-content mt-3">
                 {{#each turmas}}
-                    <div class="tab-pane fade {{#if @first}}show active{{/if}}" id="turma-{{id}}" role="tabpanel">
+                    <div class="tab-pane fade {{../ativo}} {{#if (igual ../ativo id)}}show active{{/if}}" id="turma-{{id}}" role="tabpanel">
 
                         <table class="table table-striped">
                             <tr>
