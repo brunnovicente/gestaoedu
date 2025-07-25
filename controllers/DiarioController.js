@@ -113,6 +113,7 @@ class DiarioController {
 
         var diario = {
             professor_id: req.body.professor_id,
+            aulas: req.body.aulas
         }
         var calendario_id = req.body.calendario_id
 
