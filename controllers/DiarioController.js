@@ -113,16 +113,17 @@ class DiarioController {
 
         var diario = await Diario.findOne({where:{id: req.body.id},})
 
-        // diario = {
-        //     professor_id: req.body.professor_id,
-        //     aulas: req.body.aulas
-        // }
-        diario.professor_id = req.body.professor_id
-        diario.aulas = req.body.aulas
+        var dados = {
+            id: req.body.id,
+            professor_id: req.body.professor_id,
+            aulas: req.body.aulas
+        }
+        //diario.professor_id = req.body.professor_id
+        //diario.aulas = req.body.aulas
 
         var calendario_id = req.body.calendario_id
 
-        Diario.update(diario, {
+        Diario.update(dados, {
             where:{
                 id: req.body.id
             }
