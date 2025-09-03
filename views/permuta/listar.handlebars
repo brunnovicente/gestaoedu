@@ -1,50 +1,54 @@
-<h2 class="text-center">Em construção...</h2>
-<img src="/img/acesso.gif" class="w-25 m-auto d-block">
-<!--<div class="col-md-8 p-2 mx-auto mb-3">-->
-<!--    <h4><i class="fas fa-folder"></i> Permuta de Aula</h4>-->
+<!--<h2 class="text-center">Em construção...</h2>-->
+<!--<img src="/img/acesso.gif" class="w-25 m-auto d-block">-->
+<div class="col-md-8 p-2 mx-auto mb-3">
+    <h4><i class="fas fa-folder"></i> Permuta de Aula</h4>
 
-<!--    <div class="border border-1 p-3 bg-light my-3">-->
-<!--        <p class="text-danger text-center h5">-->
-<!--            Registre suas permutas de aulas.-->
-<!--        </p>-->
-<!--    </div>-->
+    <div class="border border-1 p-3 bg-light my-3">
+        <p class="text-danger text-center h5">
+            Registre suas permutas de aulas.
+        </p>
+    </div>
 
-<!--    <div class="row">-->
-<!--        <div class="col-sm">-->
-<!--            <form method="post" action="/permuta/listar">-->
-<!--                <label>DIGITE O SEU SIAPE AQUI E PRESSIONE ENTER</label>-->
-<!--                <input class="form-control my-2 w-25" name="busca" required>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="row">
+        <div class="col-sm">
+            <form method="post" action="/permuta/listar">
+                <label>DIGITE O SEU SIAPE AQUI E PRESSIONE ENTER</label>
+                <input class="form-control my-2 w-25" name="busca" required>
+            </form>
+        </div>
+    </div>
 
-<!--    {{#if diarios}}-->
+    {{#if professor}}
+        <div class="bg-light my-3 py-2 px-1 d-flex justify-content-between">
+            <h5>Prof. {{professor.nome}}</h5>
+<!--            <a href="/permuta/minhas/{{professor.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-handshake"></i> Permutas</a>-->
+        </div>
+    {{/if}}
 
-<!--&lt;!&ndash;    <div class="bg-light my-3 py-2 px-1 d-flex justify-content-between">&ndash;&gt;-->
-<!--&lt;!&ndash;        <h5>Prof. {{professor.nome}}</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;        <a href="/permuta/minhas/{{professor.id}}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-handshake"></i> Permutas</a>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--    <table class="table table-striped">-->
-<!--        <tr>-->
-<!--            <th>CURSO</th>-->
-<!--            <th>TURMA</th>-->
-<!--            <th>DIÁRIO</th>-->
-<!--            <th>ANO</th>-->
-<!--            <th></th>-->
-<!--        </tr>-->
-<!--        {{#each diarios}}-->
-<!--        <tr>-->
-<!--            <td>{{turma.curso.descricao}}</td>-->
-<!--            <td>{{turma.descricao}}</td>-->
-<!--            <td>{{descricao}}</td>-->
-<!--            <td>{{turma.ano}}</td>-->
-<!--            <td style="width: 10%">-->
-<!--&lt;!&ndash;                <a href="/soliticacao/cadastrar/{{id}}" class="btn btn-outline-dark btn-sm m-1"><i class="fas fa-unlock"></i> Solicitação</a>&ndash;&gt;-->
-<!--                <a href="/permuta/cadastrar/{{id}}" class="btn btn-outline-dark btn-sm m-1"><i class="fa-regular fa-handshake"></i> Registrar</a>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        {{/each}}-->
-<!--    </table>-->
+    {{#if diarios}}
 
-<!--    {{/if}}-->
-<!--</div>-->
+
+    <table class="table table-striped">
+        <tr>
+            <th>CURSO</th>
+            <th>TURMA</th>
+            <th>DIÁRIO</th>
+            <th>ANO</th>
+            <th></th>
+        </tr>
+        {{#each diarios}}
+        <tr>
+            <td>{{turma.curso.descricao}}</td>
+            <td>{{turma.descricao}}</td>
+            <td>{{descricao}}</td>
+            <td>{{turma.ano}}</td>
+            <td style="width: 10%">
+<!--                <a href="/soliticacao/cadastrar/{{id}}" class="btn btn-outline-dark btn-sm m-1"><i class="fas fa-unlock"></i> Solicitação</a>-->
+                <a href="/permuta/cadastrar/{{id}}" class="btn btn-outline-dark btn-sm m-1"><i class="fa-regular fa-handshake"></i> Registrar</a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+
+    {{/if}}
+</div>

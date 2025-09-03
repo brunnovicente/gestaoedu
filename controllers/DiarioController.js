@@ -141,6 +141,9 @@ class DiarioController {
             codigo: req.body.codigo,
             descricao: req.body.descricao,
             horario: req.body.horario,
+            dias: req.body.dias,
+            eixo: req.body.eixo,
+            aulas: req.body.aulas,
             professor_id: req.body.professor_id,
             turma_id: req.body.turma_id,
         }

@@ -47,6 +47,7 @@ servidor.engine('handlebars', handlebars.engine({
         eq: (a, b) => a === b, // Compara dois valores
         or: (a, b) => a || b,
         menor: (a, b) => a < b,
+        maior: (a, b)=> a > b,
         len: function (lista){
             return lista.length
         } ,
@@ -92,9 +93,9 @@ servidor.engine('handlebars', handlebars.engine({
         },
         corPermuta: function(status){
             switch (status) {
-                case 0: return "#F0F8FF";
-                case 1: return "WHITE";
-                case 2: return "#F0FFF0";
+                case 0: return "text-bg-warning";
+                case 1: return "text-bg-primary";
+                case 2: return "text-bg-secondary";
                 case 3: return "WHITE";
             }
         },
@@ -103,6 +104,32 @@ servidor.engine('handlebars', handlebars.engine({
         },
         diferente:function (a,b){
             return a !== b
+        },
+
+        formatDateTime(dateStr) {
+            //if (!dateStr || dateStr.startsWith('0000-00-00')) return '-';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+                + ' ' +
+                d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        },
+        weekday(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('pt-BR', { weekday: 'long' })
+                .replace(/^\w/, c => c.toUpperCase());
+        },
+        statusLabel(s) {
+            const map = { 0: 'Pendente', 1: 'Aprovada', 2: 'Recusada' };
+            return map[s] ?? 'Desconhecido';
+        },
+        statusClass(s) {
+            // classes Bootstrap 5.3 "subtle" para combinar com o tema
+            switch (Number(s)) {
+                case 1: return 'bg-success-subtle text-success-emphasis';
+                case 2: return 'bg-danger-subtle text-danger-emphasis';
+                default: return 'bg-warning-subtle text-warning-emphasis';
+            }
         }
     }
 }));

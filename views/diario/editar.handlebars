@@ -45,6 +45,22 @@
 
                 {{/each}}
             </select>
+
+            <div class="row">
+                <div class="col">
+                    <label class="mt-3" for="eixo">EIXO</label>
+                    <input type="number" name="eixo" class="form-control" value="{{diario.eixo}}">
+                </div>
+                <div class="col">
+                    <label class="mt-3">QTD AULAS</label>
+                    <input type="number" name="aulas" class="form-control" value="{{diario.aulas}}">
+                </div>
+
+                <div class="col">
+                    <label class="mt-3">DIAS DE AULAS</label>
+                    <input type="text" value="{{diario.dias}}" class="form-control" name="dias" id="dias">
+                </div>
+            </div>
             <button class="btn btn-success mt-3">Salvar</button>
         </form>
     </div>

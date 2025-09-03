@@ -7,6 +7,7 @@ import tranporter from "../config/email.js"
 import auxiliar from "../helpers/auxiliar.js"
 import Usuario from "../models/Usuario.js";
 import permuta from "../models/Permuta.js";
+import comunicador from '../helpers/comunicador.js'
 
 function definirDia(data){
     const daysOfWeek = [
@@ -56,9 +57,9 @@ function formatarData(data){
 
 function enviarEmailSubstituto(permuta){
     const config = {
-        from: 'coordenacao@batcaverna.online',
+        from: 'batcaverna@batcaverna.online',
         to: permuta.substituto.professor.email,
-        subject: 'Nova Aula - '+formatarData(permuta.data),
+        subject: 'BatCaverna: Novo Registro - '+formatarData(permuta.data),
         html:`<h2>NOVA AULA ATRIBUIDA A VOCÊ</h2>
                 <table style="border-collapse: collapse; text-align: left;">
                     <tr style="border: 1px solid #ddd;">
@@ -99,9 +100,9 @@ function enviarEmailSubstituto(permuta){
 
 function enviarEmailCoordenador(permuta){
     const config = {
-        from: 'coordenacao@batcaverna.online',
+        from: 'batcaverna@batcaverna.online',
         to: permuta.diario.turma.curso.professor.email,
-        subject: 'Nova Aula - '+formatarData(permuta.data),
+        subject: 'BatCaverna: Novo Registro - '+formatarData(permuta.data),
         html:`<h2>Uma Nova Troca/Ausência foi registrada</h2>
                 <table style="border-collapse: collapse; text-align: left;">
                     <tr style="border: 1px solid #ddd;">
@@ -173,6 +174,7 @@ function gerarHorario(req){
 }
 
 export default {
+
     abrir: function (req, res){
         Permuta.update({
             status: 1
@@ -180,7 +182,8 @@ export default {
             where:{
                 id: req.params.id
             }
-        }).then(function () {
+        }).then(function (permuta) {
+            //comunicador.enviarConfirmacaoAbrir(permuta)
             req.flash('success_msg', 'Permuta aberta com sucesso!')
             res.redirect('/permuta')
         })
@@ -278,10 +281,124 @@ export default {
                 }
             ],
             order:[
-                ['data', 'DESC']
+                ['data', 'ASC']
             ]
         }).then(function(permutas){
             res.render('permuta/index', {permutas: permutas})
+        })
+    },
+    buscar: function(req, res){
+        var status = req.body.busca;
+        if (status == 3) {
+            res.redirect('/permuta');
+        } else {
+            Permuta.findAll({
+                where: {
+                    status: status
+                },
+                include: [
+                    {
+                        model: Diario,
+                        as: 'diario',
+                        include: [
+                            {
+                                model: Professor,
+                                as: 'professor'
+                            },
+                            {
+                                model: Turma,
+                                include: Curso,
+                            }
+                        ]
+                    },
+                    {
+                        model: Diario,
+                        as: 'substituto',
+                        include: {
+                            model: Professor,
+                            as: 'professor'
+                        }
+                    }
+                ],
+                order: [
+                    ['data', 'ASC']
+                ]
+            }).then(function (permutas) {
+                res.render('permuta/index', {permutas: permutas, status: status})
+            })
+        }
+    },
+
+    pendentes: function(req, res){
+        Permuta.findAll({
+            where:{
+                status: 0
+            },
+            include:[
+                {
+                    model: Diario,
+                    as: 'diario',
+                    include:[
+                        {
+                            model: Professor,
+                            as: 'professor'
+                        },
+                        {
+                            model: Turma,
+                            include: Curso,
+                        }
+                    ]
+                },
+                {
+                    model: Diario,
+                    as: 'substituto',
+                    include:{
+                        model: Professor,
+                        as: 'professor'
+                    }
+                }
+            ],
+            order:[
+                ['data', 'ASC']
+            ]
+        }).then(function(permutas){
+            res.render('permuta/index', {permutas: permutas, status: '0'})
+        })
+    },
+    abertas: function(req, res){
+        Permuta.findAll({
+            where:{
+                status: 1
+            },
+            include:[
+                {
+                    model: Diario,
+                    as: 'diario',
+                    include:[
+                        {
+                            model: Professor,
+                            as: 'professor'
+                        },
+                        {
+                            model: Turma,
+                            include: Curso,
+                        }
+                    ]
+                },
+                {
+                    model: Diario,
+                    as: 'substituto',
+                    include:{
+                        model: Professor,
+                        as: 'professor'
+                    }
+                }
+            ],
+            order:[
+                ['data', 'ASC']
+            ]
+        }).then(function(permutas){
+            res.render('permuta/index', {permutas: permutas, status: '1'})
         })
     },
     cadastrar: function (req, res){
