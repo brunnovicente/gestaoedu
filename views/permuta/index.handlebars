@@ -13,87 +13,98 @@
         </div>
     </nav>
 
-<!--    <div class="row bg-secondary-subtle mt-2">-->
-<!--        <div class="col-sm-3"><strong>DIÁRIO</strong></div>-->
-<!--        <div class="col-sm-3"><strong>SUBSTITUTO</strong></div>-->
-<!--        <div class="col-sm-2"><STRONG>DATA</STRONG></div>-->
-<!--        <div class="col-sm-2"><strong>DIA</strong></div>-->
-<!--        <div class="col-sm-1"><strong>HORARIOS</strong></div>-->
-<!--        <div class="col-sm-1"></div>-->
-<!--    </div>-->
-    {{#each permutas}}
-        <div class="row py-1 m-0" style="background-color: {{corPermuta this.status}}">
-            <div class="col-sm-3">
-                <strong class="d-block">DIÁRIO</strong>
-                {{this.diario.descricao}}
-            </div>
-            <div class="col-sm-3">
-                <strong class="d-block">SUBSTITUTO</strong>
-                {{this.substituto.descricao}}
-            </div>
-            <div class="col-sm-2">
-                <strong class="d-block">DATA</strong>
-                {{formatDate this.data}}
-            </div>
-            <div class="col-sm-1">
-                <strong class="d-block">DIA</strong>
-                {{this.dia}}
-            </div>
-            <div class="col-sm-1">
-                <strong class="d-block">HORARIOS</strong>
-                {{this.horarios}}
-            </div>
-            <div class="col-sm-1">
-                <strong class="d-block">STATUS</strong>
-                {{statusPermuta this.status}}
-            </div>
+    <div class="container-sm">
+        <p>Filtro</p>
+        <form action="/permuta/buscar" method="post">
 
-            <div class="col-sm-1 d-flex justify-content-end">
-
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <button class="dropdown-item verDetalhes"
-                                    data-id="{{this.id}}"
-                                    data-diario="{{this.diario.descricao}}"
-                                    data-substituto="{{this.substituto.descricao}}"
-                                    data-dia="{{this.dia}}"
-                                    data-data="{{formatDate this.data}}"
-                                    data-horario="{{this.horarios}}"
-                                    data-justificativa="{{this.justificativa}}">
-                                <i class="fa-regular fa-folder-open"></i> Detalhes
-                            </button>
-                        </li>
-
-                        {{#if (igual status 1)}}
-                            <li>
-                                <a class="dropdown-item me-2" href="/permuta/fechar/{{id}}"><i class="fa-solid fa-lock"></i> Fechar</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
-                            </li>
-                        {{/if}}
-
-                        {{#if (igual status 0)}}
-                            <li>
-                                <a class="dropdown-item me-2" href="https://suap.ifma.edu.br/edu/definir_horario_aula_diario/{{substituto.codigo}}" target="_blank"><i class="fab fa-speakap"></i> SUAP</a>
-                            </li>
-                            <li>
-                                <button class="dropdown-item me-2" onclick="abrir({{id}})"><i class="fa-solid fa-lock-open"></i> Abrir</button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item me-2" onclick="excluir({{id}})"><i class="fa-solid fa-trash-can"></i> Excluir</button>
-                            </li>
-                        {{/if}}
-                    </ul>
+            <div class="row">
+                <div class="col-3">
+                    <select name="busca" id="busca" class="form-select">
+                        <option value="3" {{#if (eq status '3')}}selected{{/if}}>Todas</option>
+                        <option value="0" {{#if (eq status '0')}}selected{{/if}}>Pendentes</option>
+                        <option value="1" {{#if (eq status '1')}}selected{{/if}}>Abertas</option>
+                        <option value="2" {{#if (eq status '2')}}selected{{/if}}>Fechadas</option>
+                    </select>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-sm btn-primary">Buscar</button>
                 </div>
             </div>
-        </div>
-        <hr class="m-0 p-0">
 
+        </form>
+    </div>
+
+    <!-- PERMUTAS PENDENTES -->
+    {{#each permutas}}
+        <div class="shadow-sm mt-3 p-3 rounded rounded-1 border border-1 bg-body-tertiary">
+            <nav class="bg-body-secondary mb-3">
+                <ul class="nav justify-content-end">
+
+                    {{#if (eq status 0)}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SUAP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/permuta/abrir/{{id}}">ABRIR</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="excluir({{id}})">EXCLUIR</a>
+                        </li>
+                    {{/if}}
+
+                    {{#if (eq status 1)}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SUAP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/permuta/fechar/{{id}}">FECHAR</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </nav>
+            <div class="row mb-2">
+                <div class="col">
+                    <strong>PROFESSOR: </strong> {{diario.professor.nome}}
+                </div>
+                <div class="col-sm">
+                    <strong>JUSTIFICATIVA: </strong> {{justificativa}}
+                </div>
+                <div class="col-sm-1">
+                    <span class="badge {{corPermuta status}}">
+                        {{statusPermuta status}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <strong>DIÁRIO</strong>: {{diario.descricao}}
+                </div>
+                <div class="col-sm-3">
+                    <strong>TURMA </strong>: {{diario.turma.descricao}}
+                </div>
+                <div class="col-sm-2">
+                    <strong>DATA</strong>: {{formatDate data}}
+                </div>
+                <div class="col-sm-2">
+                    <strong>DIA</strong>: {{dia}}
+                </div>
+                <div class="col-sm-2">
+                    <strong>HORARIOS</strong>: {{horarios}}
+                </div>
+
+            </div>
+            <hr class="m-0 p-0">
+            <div class="row mt-3">
+                <div class="col-sm">
+                    <strong>SUBSTITUTO: </strong> {{substituto.professor.nome}}
+                </div>
+
+                <div class="col-sm">
+                    <strong>DIÁRIO</strong>: {{substituto.descricao}}
+                </div>
+
+            </div>
+        </div>
     {{/each}}
 
     <!-- Modal -->
